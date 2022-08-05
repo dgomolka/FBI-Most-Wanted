@@ -1,0 +1,3 @@
+package com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedlist.model
+
+class MostWantedPersonPresentationModel

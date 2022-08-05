@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="11">
+      <module name="FBI_Most_Wanted.data.commonMain" target="1.8" />
+      <module name="FBI_Most_Wanted.data.commonTest" target="1.8" />
+      <module name="FBI_Most_Wanted.data.jvmMain" target="1.8" />
+      <module name="FBI_Most_Wanted.data.jvmTest" target="1.8" />
+      <module name="FBI_Most_Wanted.domain.commonMain" target="1.8" />
+      <module name="FBI_Most_Wanted.domain.commonTest" target="1.8" />
+      <module name="FBI_Most_Wanted.domain.jvmMain" target="1.8" />
+      <module name="FBI_Most_Wanted.domain.jvmTest" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

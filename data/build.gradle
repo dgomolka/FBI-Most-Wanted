@@ -1,0 +1,80 @@
+plugins {
+    id "org.jetbrains.kotlin.multiplatform"
+    id "org.jetbrains.kotlin.plugin.serialization"
+    id "com.android.library"
+    id "com.squareup.sqldelight"
+}
+
+kotlin {
+    android {
+
+    }
+    ios {
+        binaries {
+            framework {
+                baseName = "data"
+            }
+        }
+    }
+
+    sourceSets {
+        commonMain.dependencies {
+            implementation project(":domain")
+            implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinx_coroutines_version"
+            implementation "org.jetbrains.kotlinx:kotlinx-serialization-core:$kotlinx_serialization_runtime"
+
+            implementation "io.ktor:ktor-client-core:$ktor_version"
+            implementation "io.ktor:ktor-client-serialization:$ktor_version"
+            implementation "io.ktor:ktor-client-logging:$ktor_version"
+
+            implementation "com.squareup.sqldelight:runtime:$sql_delight_version"
+        }
+
+        androidMain.dependencies {
+            api "io.ktor:ktor-client-android:$ktor_version"
+            implementation "io.ktor:ktor-client-logging-jvm:$ktor_version"
+            implementation "com.squareup.sqldelight:android-driver:$sql_delight_version"
+        }
+
+        iosMain.dependencies {
+            implementation "com.squareup.sqldelight:native-driver:$sql_delight_version"
+            implementation "io.ktor:ktor-client-ios:$ktor_version"
+        }
+
+        jvmMain.dependencies {
+            implementation kotlin("stdlib")
+            implementation "org.jetbrains:annotations:$jetbrains_annotations_version"
+            implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:$kotlinx_coroutines_version"
+        }
+    }
+}
+
+apply from: '../projectConfiguration.gradle'
+
+android {
+    compileSdkVersion compile_sdk_version
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    defaultConfig {
+        minSdkVersion min_sdk_version
+        targetSdkVersion target_sdk_version
+    }
+    compileOptions {
+        sourceCompatibility compile_java_version
+        targetCompatibility compile_java_version
+    }
+    kotlinOptions {
+        jvmTarget = compile_jvm_target
+    }
+}
+
+sqldelight {
+    AppDatabaseCommon {
+        packageName = "com.psycodeinteractive.fbimostwanted.data.cache"
+    }
+}
+
+afterEvaluate {
+    def generateAndroidDebugAppDatabaseCommonInterface = tasks.getByName('generateSqlDelightInterface')
+    tasks.getByName('compileDebugKotlinAndroid').dependsOn(generateAndroidDebugAppDatabaseCommonInterface)
+    tasks.getByName('compileReleaseKotlinAndroid').dependsOn(generateAndroidDebugAppDatabaseCommonInterface)
+}

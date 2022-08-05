@@ -1,0 +1,29 @@
+pluginManagement {
+    apply from: 'dependencies.gradle'
+
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+    plugins {
+        id 'org.jetbrains.kotlin.multiplatform' version kotlin_version
+        id 'org.jetbrains.kotlin.plugin.serialization' version kotlin_version
+        id 'com.android.library' version android_version
+        id 'org.jetbrains.kotlin.android' version kotlin_version
+        id 'com.google.devtools.ksp' version ksp_version
+        id 'org.jetbrains.kotlin.jvm' version kotlin_version
+    }
+}
+buildCache {
+    local {
+        removeUnusedEntriesAfterDays = 1
+    }
+}
+
+rootProject.name = "FBI Most Wanted"
+include ':app'
+include ':ui'
+include ':data'
+include ':domain'
+include ':presentation'

@@ -1,0 +1,25 @@
+ext {
+    android_gradle_version = '7.1.3'
+    kotlin_version = '1.6.21'
+    android_version = "7.2.1"
+    ksp_version = "1.6.21-1.0.6"
+    kotlinx_serialization_version = "1.4.0-RC"
+    hilt_gradle_version = "2.38.1"
+    sql_delight_version = "1.5.3"
+    kotlinx_coroutines_version = "1.6.1-native-mt"
+    ktor_version = "2.0.3"
+    jetbrains_annotations_version = '18.0.0'
+    compose_kotlin_compiler_extension_version = "1.2.0"
+    mockative_version = "1.2.3"
+    javax_inject_version = "1"
+    androidx_multidex_version = "2.0.1"
+}
+
+static def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.mavenCentral()
+    handler.maven { url "https://maven.google.com" }
+    handler.maven { url "https://plugins.gradle.org/m2/" }
+}
+
+ext.addRepos = this.&addRepos
