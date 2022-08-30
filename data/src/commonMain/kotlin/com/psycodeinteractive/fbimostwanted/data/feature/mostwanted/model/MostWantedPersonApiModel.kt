@@ -1,4 +1,4 @@
-package com.psycodeinteractive.fbimostwanted.data.mostwanted.model
+package com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

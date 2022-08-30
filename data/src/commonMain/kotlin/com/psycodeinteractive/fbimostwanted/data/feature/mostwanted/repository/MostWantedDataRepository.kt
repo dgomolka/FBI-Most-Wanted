@@ -1,11 +1,12 @@
-package com.psycodeinteractive.fbimostwanted.data.mostwanted.repository
+package com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.repository
 
+import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.source.MostWantedDataSource
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.model.MostWantedPersonDomainModel
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.repository.MostWantedRepository
 
 class MostWantedDataRepository(
     private val mostWantedDataSource: MostWantedDataSource
-): MostWantedRepository {
+) : MostWantedRepository {
     override fun getMostWantedList(): List<MostWantedPersonDomainModel> {
         TODO()
     }

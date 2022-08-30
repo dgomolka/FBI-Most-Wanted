@@ -2,11 +2,11 @@ package com.psycodeinteractive.fbimostwanted.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.BaseUseCase
 import com.psycodeinteractive.fbimostwanted.domain.execution.UseCaseExecutor
+import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.BaseUseCase
+import com.psycodeinteractive.fbimostwanted.presentation.execution.UseCaseExecutorProvider
 import com.psycodeinteractive.fbimostwanted.presentation.mapper.DefaultDomainToPresentationExceptionMapper
 import com.psycodeinteractive.fbimostwanted.presentation.model.exception.PresentationException
-import com.psycodeinteractive.fbimostwanted.presentation.usecaseexecutor.UseCaseExecutorProvider
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
 import kotlinx.coroutines.flow.MutableStateFlow

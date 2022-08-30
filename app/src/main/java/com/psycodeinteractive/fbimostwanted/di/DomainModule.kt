@@ -4,7 +4,7 @@ import com.psycodeinteractive.fbimostwanted.domain.base.Logger
 import com.psycodeinteractive.fbimostwanted.domain.base.usecase.CoroutineContextProvider
 import com.psycodeinteractive.fbimostwanted.domain.base.usecase.PlatformCoroutineContextProvider
 import com.psycodeinteractive.fbimostwanted.domain.execution.UseCaseExecutor
-import com.psycodeinteractive.fbimostwanted.presentation.usecaseexecutor.UseCaseExecutorProvider
+import com.psycodeinteractive.fbimostwanted.presentation.execution.UseCaseExecutorProvider
 
 object DomainModule {
 
