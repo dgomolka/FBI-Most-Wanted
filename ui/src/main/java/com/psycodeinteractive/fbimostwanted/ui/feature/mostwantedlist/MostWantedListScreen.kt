@@ -128,7 +128,7 @@ private fun MostWantedPersonListItem(
             }
             Divider(
                 modifier = Modifier.padding(top = listItemPadding),
-                color = dividerColor
+                color = listItemDividerColor
             )
         }
     }
@@ -136,5 +136,5 @@ private fun MostWantedPersonListItem(
 
 private val listItemPadding = 16.dp
 
-private val dividerColor = Color.LightGray.copy(0.3f)
+private val listItemDividerColor = Color.LightGray.copy(0.3f)
 private val topDividerColor = Color.LightGray.copy(0.35f)

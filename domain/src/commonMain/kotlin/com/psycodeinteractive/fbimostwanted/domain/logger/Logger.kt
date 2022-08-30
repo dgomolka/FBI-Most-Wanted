@@ -1,4 +1,4 @@
-package com.psycodeinteractive.fbimostwanted.domain.base
+package com.psycodeinteractive.fbimostwanted.domain.logger
 
 interface Logger {
     fun v(message: String)

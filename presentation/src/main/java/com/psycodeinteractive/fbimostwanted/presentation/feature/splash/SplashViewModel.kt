@@ -14,5 +14,5 @@ class SplashViewModel : BaseViewModel<SplashViewState, SplashEvent>() {
         SplashFinished.dispatch()
     }
 
-    override fun getInitialState() = SplashViewState
+    override fun getInitialViewState() = SplashViewState
 }

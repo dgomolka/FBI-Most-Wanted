@@ -1,4 +1,4 @@
-package com.psycodeinteractive.fbimostwanted.domain.base.usecase
+package com.psycodeinteractive.fbimostwanted.domain.execution.usecase
 
 import kotlin.coroutines.CoroutineContext
 

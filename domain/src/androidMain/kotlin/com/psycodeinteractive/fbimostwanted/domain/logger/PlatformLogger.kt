@@ -1,7 +1,6 @@
 package com.psycodeinteractive.fbimostwanted.domain.logger
 
 import android.util.Log
-import com.psycodeinteractive.fbimostwanted.domain.base.Logger
 
 actual class PlatformLogger : Logger {
     override fun v(message: String) {

@@ -1,9 +1,9 @@
 package com.psycodeinteractive.fbimostwanted.domain.execution
 
-import com.psycodeinteractive.fbimostwanted.domain.base.Logger
-import com.psycodeinteractive.fbimostwanted.domain.base.exception.DomainException
-import com.psycodeinteractive.fbimostwanted.domain.base.usecase.BaseUseCase
-import com.psycodeinteractive.fbimostwanted.domain.base.usecase.RunningExecution
+import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.BaseUseCase
+import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.RunningExecution
+import com.psycodeinteractive.fbimostwanted.domain.logger.Logger
+import com.psycodeinteractive.fbimostwanted.domain.model.exception.DomainException
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job

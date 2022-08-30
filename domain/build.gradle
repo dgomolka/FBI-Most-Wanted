@@ -1,7 +1,7 @@
 plugins {
     id "org.jetbrains.kotlin.multiplatform"
-    id "com.android.library"
     id "com.google.devtools.ksp"
+    id "com.android.library"
 }
 
 configurations {
@@ -28,6 +28,22 @@ kotlin {
         commonTest.dependencies {
             implementation "io.mockative:mockative:$mockative_version"
         }
+    }
+}
+
+android {
+    compileSdkVersion compile_sdk_version
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    defaultConfig {
+        minSdkVersion min_sdk_version
+        targetSdkVersion target_sdk_version
+    }
+    compileOptions {
+        sourceCompatibility compile_java_version
+        targetCompatibility compile_java_version
+    }
+    kotlinOptions {
+        jvmTarget = compile_jvm_target
     }
 }
 

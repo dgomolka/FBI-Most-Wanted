@@ -70,8 +70,8 @@ inline fun <reified VM : ViewModel> viewModel(
 @Composable
 inline fun <VM : BaseViewModel<VS, out Event>, reified VS : ViewState>
 VM.collectViewState(): MutableState<VS> {
-    val composeState = state.collectAsState(StateWrapper(getInitialState()))
-    val newState = remember { mutableStateOf(getInitialState()) }
+    val composeState = viewState.collectAsState(StateWrapper(getInitialViewState()))
+    val newState = remember { mutableStateOf(getInitialViewState()) }
     newState.value = composeState.value.state
     return newState
 }

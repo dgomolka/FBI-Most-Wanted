@@ -2,14 +2,15 @@ package com.psycodeinteractive.fbimostwanted.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.psycodeinteractive.fbimostwanted.domain.base.exception.DomainException
-import com.psycodeinteractive.fbimostwanted.domain.base.usecase.BaseUseCase
+import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.BaseUseCase
 import com.psycodeinteractive.fbimostwanted.domain.execution.UseCaseExecutor
+import com.psycodeinteractive.fbimostwanted.presentation.mapper.DefaultDomainToPresentationExceptionMapper
+import com.psycodeinteractive.fbimostwanted.presentation.model.exception.PresentationException
 import com.psycodeinteractive.fbimostwanted.presentation.usecaseexecutor.UseCaseExecutorProvider
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import javax.inject.Inject
 
@@ -18,23 +19,24 @@ abstract class BaseViewModel<BaseState : ViewState, BaseEvent : Event> : ViewMod
     @Inject
     private lateinit var useCaseExecutorProvider: UseCaseExecutorProvider
 
-    val state by lazy { MutableStateFlow(StateWrapper(getInitialState())) }
+    @Inject
+    private lateinit var defaultDomainToPresentationExceptionMapper: DefaultDomainToPresentationExceptionMapper
+
+    private val useCaseExecutor: UseCaseExecutor = useCaseExecutorProvider(viewModelScope)
+
+    private val _viewState by lazy { MutableStateFlow(StateWrapper(getInitialViewState())) }
+    val viewState by lazy { _viewState.asStateFlow() }
 
     private val _eventChannel by lazy { Channel<BaseEvent>(BUFFERED) }
     val eventFlow by lazy { _eventChannel.receiveAsFlow() }
 
-    val StateFlow<StateWrapper<BaseState>>.current
-        get() = this.value.state
+    abstract fun getInitialViewState(): BaseState
 
-    private val useCaseExecutor: UseCaseExecutor = useCaseExecutorProvider(viewModelScope)
-
-    abstract fun getInitialState(): BaseState
-
-    protected fun mutateViewState(mutation: BaseState.() -> Unit) {
-        val currentState = state.value.state
+    protected fun updateViewState(mutation: BaseState.() -> Unit) {
+        val currentState = _viewState.value.state
         mutation(currentState)
         val newStateWrapped = StateWrapper(currentState)
-        state.value = newStateWrapped
+        _viewState.value = newStateWrapped
     }
 
     class StateWrapper<BaseState : ViewState>(val state: BaseState)
@@ -43,12 +45,16 @@ abstract class BaseViewModel<BaseState : ViewState, BaseEvent : Event> : ViewMod
 
     protected fun <Output> BaseUseCase<Unit, Output>.execute(
         callback: (Output) -> Unit = {},
-        onError: (DomainException) -> Unit = {}
-    ) = useCaseExecutor.execute(this, callback, onError)
+        onError: (PresentationException) -> Unit = {}
+    ) = useCaseExecutor.execute(this, callback) { exception ->
+        onError(defaultDomainToPresentationExceptionMapper.toPresentation(exception))
+    }
 
     protected fun <Input, Output> BaseUseCase<Input, Output>.execute(
         value: Input,
         callback: (Output) -> Unit = {},
-        onError: (DomainException) -> Unit = {}
-    ) = useCaseExecutor.execute(this, value, callback, onError)
+        onError: (PresentationException) -> Unit = {}
+    ) = useCaseExecutor.execute(this, value, callback) { exception ->
+        onError(defaultDomainToPresentationExceptionMapper.toPresentation(exception))
+    }
 }
