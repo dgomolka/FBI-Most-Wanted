@@ -6,13 +6,13 @@ import com.psycodeinteractive.fbimostwanted.presentation.feature.splash.SplashEv
 
 class SplashViewModel : BaseViewModel<SplashViewState, SplashEvent>() {
 
+    override val initialViewState = SplashViewState
+
     init {
-        StartSplash.dispatch()
+        StartSplash.dispatchEvent()
     }
 
     fun onSplashFinished() {
-        SplashFinished.dispatch()
+        SplashFinished.dispatchEvent()
     }
-
-    override fun getInitialViewState() = SplashViewState
 }

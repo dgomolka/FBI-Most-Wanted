@@ -1,6 +1,6 @@
-package com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.model
+package com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.model
 
-data class MostWantedPersonPresentationModel(
+data class MostWantedPersonDataModel(
     val uid: String,
     val id: String,
 
@@ -21,7 +21,7 @@ data class MostWantedPersonPresentationModel(
 
     val languages: List<String>,
 
-    val sex: SexPresentationModel,
+    val sex: SexDataModel,
 
     val scarsAndMarks: String,
     val complexion: String,
@@ -47,12 +47,12 @@ data class MostWantedPersonPresentationModel(
     val rewardMin: Long,
     val rewardMax: Long,
 
-    val files: List<FilePresentationModel>,
-    val images: List<ImagePresentationModel>,
+    val files: List<FileDataModel>,
+    val images: List<ImageDataModel>,
 
     val title: String,
     val description: String,
-    val status: StatusPresentationModel,
+    val status: StatusDataModel,
     val remarks: String,
     val path: String,
 

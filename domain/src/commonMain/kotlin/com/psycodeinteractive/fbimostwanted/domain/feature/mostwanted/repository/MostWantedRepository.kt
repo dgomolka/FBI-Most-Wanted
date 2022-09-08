@@ -3,6 +3,6 @@ package com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.repositor
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.model.MostWantedPersonDomainModel
 
 interface MostWantedRepository {
-    fun getMostWantedList(): List<MostWantedPersonDomainModel>
-    fun getMostWantedPerson(personId: String): MostWantedPersonDomainModel
+    suspend fun getMostWantedList(): List<MostWantedPersonDomainModel>
+    suspend fun getMostWantedPerson(personId: String): MostWantedPersonDomainModel
 }

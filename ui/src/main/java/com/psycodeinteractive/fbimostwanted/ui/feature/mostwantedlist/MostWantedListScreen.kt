@@ -29,7 +29,7 @@ import com.psycodeinteractive.fbimostwanted.ui.Screen
 import com.psycodeinteractive.fbimostwanted.ui.collectViewState
 import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedlist.mapper.MostWantedPersonPresentationToUiMapper
 import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedlist.model.MostWantedListTopBarResourcesUiModel
-import com.psycodeinteractive.fbimostwanted.ui.feature.persondetails.model.MostWantedPersonUiModel
+import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.model.MostWantedPersonUiModel
 import com.psycodeinteractive.fbimostwanted.ui.observeWithLifecycle
 import com.psycodeinteractive.fbimostwanted.ui.themeTypography
 import com.psycodeinteractive.fbimostwanted.ui.widget.FBIMostWantedLazyColumn
@@ -44,7 +44,7 @@ fun MostWantedListScreen(
     mostWantedPersonPresentationToUiMapper: MostWantedPersonPresentationToUiMapper,
     goToPersonDetails: (personId: Long) -> Unit
 ) {
-    Screen(provideMostWantedListViewModel) { viewModel ->
+    Screen(provideMostWantedListViewModel) { viewModel, _ ->
         val state by viewModel.collectViewState()
         val mostWantedPersonList = state.mostWantedPersonList.map(
             mostWantedPersonPresentationToUiMapper::toUi

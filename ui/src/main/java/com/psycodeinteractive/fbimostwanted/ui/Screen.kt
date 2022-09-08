@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Lifecycle.State.STARTED
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -23,7 +24,6 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import com.psycodeinteractive.fbimostwanted.presentation.BaseViewModel
-import com.psycodeinteractive.fbimostwanted.presentation.BaseViewModel.StateWrapper
 import com.psycodeinteractive.fbimostwanted.presentation.Event
 import com.psycodeinteractive.fbimostwanted.presentation.ViewState
 import kotlinx.coroutines.flow.Flow
@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
 @Composable
 inline fun <reified VM : BaseViewModel<out ViewState, out Event>> Screen(
     crossinline provideViewModel: () -> VM,
-    crossinline children: @Composable (viewModel: VM) -> Unit
+    crossinline children: @Composable (viewModel: VM, lifecycleScope: LifecycleCoroutineScope) -> Unit
 ) {
     val viewModel: VM = viewModel { provideViewModel() }
 
@@ -48,7 +48,7 @@ inline fun <reified VM : BaseViewModel<out ViewState, out Event>> Screen(
         enter = fadeIn(animationSpec = animSpec),
         exit = fadeOut(animationSpec = animSpec)
     ) {
-        children(viewModel)
+        children(viewModel, LocalLifecycleOwner.current.lifecycleScope)
     }
 }
 
@@ -70,8 +70,8 @@ inline fun <reified VM : ViewModel> viewModel(
 @Composable
 inline fun <VM : BaseViewModel<VS, out Event>, reified VS : ViewState>
 VM.collectViewState(): MutableState<VS> {
-    val composeState = viewState.collectAsState(StateWrapper(getInitialViewState()))
-    val newState = remember { mutableStateOf(getInitialViewState()) }
+    val composeState = viewState.collectAsState(initialViewState.wrap())
+    val newState = remember { mutableStateOf(initialViewState) }
     newState.value = composeState.value.state
     return newState
 }

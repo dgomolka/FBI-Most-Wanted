@@ -1,16 +1,16 @@
-package com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.mapper
+package com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.mapper
 
+import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.model.MostWantedPersonDataModel
+import com.psycodeinteractive.fbimostwanted.domain.contract.mapper.DataToDomainMapper
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.model.MostWantedPersonDomainModel
-import com.psycodeinteractive.fbimostwanted.presentation.contract.mapper.DomainToPresentationMapper
-import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.model.MostWantedPersonPresentationModel
 
-class MostWantedPersonDomainToPresentationMapper(
-    private val sexDomainToPresentationMapper: SexDomainToPresentationMapper,
-    private val fileDomainToPresentationMapper: FileDomainToPresentationMapper,
-    private val imageDomainToPresentationMapper: ImageDomainToPresentationMapper,
-    private val statusDomainToPresentationMapper: StatusDomainToPresentationMapper
-) : DomainToPresentationMapper<MostWantedPersonDomainModel, MostWantedPersonPresentationModel>() {
-    override fun map(input: MostWantedPersonDomainModel) = MostWantedPersonPresentationModel(
+class MostWantedPersonDataToDomainMapper(
+    private val sexDataToDomainMapper: SexDataToDomainMapper,
+    private val fileDataToDomainMapper: FileDataToDomainMapper,
+    private val imageDataToDomainMapper: ImageDataToDomainMapper,
+    private val statusDataToDomainMapper: StatusDataToDomainMapper
+) : DataToDomainMapper<MostWantedPersonDataModel, MostWantedPersonDomainModel>() {
+    override fun map(input: MostWantedPersonDataModel) = MostWantedPersonDomainModel(
         uid = input.uid,
         id = input.id,
         rewardText = input.rewardText,
@@ -30,7 +30,7 @@ class MostWantedPersonDomainToPresentationMapper(
 
         languages = input.languages,
 
-        sex = sexDomainToPresentationMapper.toData(input.sex),
+        sex = sexDataToDomainMapper.toData(input.sex),
 
         scarsAndMarks = input.scarsAndMarks,
         complexion = input.complexion,
@@ -56,12 +56,12 @@ class MostWantedPersonDomainToPresentationMapper(
         rewardMin = input.rewardMin,
         rewardMax = input.rewardMax,
 
-        files = input.files.map(fileDomainToPresentationMapper::toData),
-        images = input.images.map(imageDomainToPresentationMapper::toData),
+        files = input.files.map(fileDataToDomainMapper::toData),
+        images = input.images.map(imageDataToDomainMapper::toData),
 
         title = input.title,
         description = input.description,
-        status = statusDomainToPresentationMapper.toData(input.status),
+        status = statusDataToDomainMapper.toData(input.status),
         remarks = input.remarks,
         path = input.path,
 

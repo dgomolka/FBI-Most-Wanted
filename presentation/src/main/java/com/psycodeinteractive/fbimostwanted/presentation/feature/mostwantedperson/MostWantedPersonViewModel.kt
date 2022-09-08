@@ -1,7 +1,6 @@
 package com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson
 
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.model.MostWantedPersonDomainModel
-import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.usecase.GetMostWantedListUseCase
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.usecase.GetMostWantedPersonUseCase
 import com.psycodeinteractive.fbimostwanted.presentation.BaseViewModel
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.mapper.MostWantedPersonDomainToPresentationMapper
@@ -11,7 +10,7 @@ class MostWantedPersonViewModel(
     private val mostWantedPersonDomainToPresentationMapper: MostWantedPersonDomainToPresentationMapper
 ) : BaseViewModel<MostWantedPersonViewState, MostWantedPersonEvent>() {
 
-    override fun getInitialViewState() = MostWantedPersonViewState()
+    override val initialViewState = MostWantedPersonViewState()
 
     fun fetchMostWantedPerson(personId: String) {
         getMostWantedPersonUseCase.execute(
@@ -20,9 +19,15 @@ class MostWantedPersonViewModel(
         )
     }
 
+    fun onViewCreated(personId: String) {
+        fetchMostWantedPerson(personId)
+    }
+
     private fun updateMostWantedPersonState(mostWantedPersonDomainModel: MostWantedPersonDomainModel) {
         updateViewState {
-            mostWantedPerson = mostWantedPersonDomainToPresentationMapper.toPresentation(mostWantedPersonDomainModel)
+            mostWantedPerson = mostWantedPersonDomainToPresentationMapper.toPresentation(
+                mostWantedPersonDomainModel
+            )
         }
     }
 }
