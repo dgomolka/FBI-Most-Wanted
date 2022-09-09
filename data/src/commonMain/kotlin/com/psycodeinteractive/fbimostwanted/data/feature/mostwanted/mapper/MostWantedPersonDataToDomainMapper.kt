@@ -18,20 +18,13 @@ class MostWantedPersonDataToDomainMapper(
         publication = input.publication,
         url = input.url,
         warningMessage = input.warningMessage,
-
         details = input.details,
-
         occupations = input.occupations,
-
         nationality = input.nationality,
-
         placeOfBirth = input.placeOfBirth,
         datesOfBirthUsed = input.datesOfBirthUsed,
-
         languages = input.languages,
-
-        sex = sexDataToDomainMapper.toData(input.sex),
-
+        sex = sexDataToDomainMapper.toDomain(input.sex),
         scarsAndMarks = input.scarsAndMarks,
         complexion = input.complexion,
         race = input.race,
@@ -41,40 +34,29 @@ class MostWantedPersonDataToDomainMapper(
         hairRaw = input.hairRaw,
         eyes = input.eyes,
         eyesRaw = input.eyesRaw,
-
         ageMin = input.ageMin,
         ageMax = input.ageMax,
         ageRange = input.ageRange,
-
         weight = input.weight,
         weightMin = input.weightMin,
         weightMax = input.weightMax,
-
         heightMin = input.heightMin,
         heightMax = input.heightMax,
-
         rewardMin = input.rewardMin,
         rewardMax = input.rewardMax,
-
-        files = input.files.map(fileDataToDomainMapper::toData),
-        images = input.images.map(imageDataToDomainMapper::toData),
-
+        files = input.files.map(fileDataToDomainMapper::toDomain),
+        images = input.images.map(imageDataToDomainMapper::toDomain),
         title = input.title,
         description = input.description,
-        status = statusDataToDomainMapper.toData(input.status),
+        status = statusDataToDomainMapper.toDomain(input.status),
         remarks = input.remarks,
         path = input.path,
-
         possibleStates = input.possibleStates,
         possibleCountries = input.possibleCountries,
-
         caution = input.caution,
         modified = input.modified,
-
         subjects = input.subjects,
-
         ncic = input.ncic,
-
         fieldOffices = input.fieldOffices,
     )
 }

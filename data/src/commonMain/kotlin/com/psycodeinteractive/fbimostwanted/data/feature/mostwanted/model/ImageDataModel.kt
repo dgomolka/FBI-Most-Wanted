@@ -4,5 +4,5 @@ data class ImageDataModel(
     val original: String,
     val thumb: String,
     val large: String,
-    val caption: String?
+    val caption: String
 )

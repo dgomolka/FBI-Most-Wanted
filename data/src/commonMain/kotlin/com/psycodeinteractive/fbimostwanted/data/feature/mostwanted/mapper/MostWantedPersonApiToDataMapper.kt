@@ -1,13 +1,9 @@
 package com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.mapper
 
-import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.model.FileDataModel
-import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.model.ImageDataModel
 import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.model.MostWantedPersonDataModel
-import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.model.SexDataModel
-import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.model.StatusDataModel
+import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.model.SexDataModel.Unspecified
 import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.model.remote.MostWantedPersonApiModel
 import com.psycodeinteractive.fbimostwanted.domain.contract.mapper.DataToDomainMapper
-import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.model.MostWantedPersonDomainModel
 
 class MostWantedPersonApiToDataMapper(
     private val sexApiToDataMapper: SexApiToDataMapper,
@@ -35,7 +31,7 @@ class MostWantedPersonApiToDataMapper(
 
         languages = input.languages.orEmpty(),
 
-        sex = sexApiToDataMapper.toData(input.sex),
+        sex = input.sex?.let(sexApiToDataMapper::toData) ?: Unspecified,
 
         scarsAndMarks = input.scarsAndMarks.orEmpty(),
         complexion = input.complexion.orEmpty(),
@@ -63,7 +59,7 @@ class MostWantedPersonApiToDataMapper(
 
         files = input.files.map(fileApiToDataMapper::toData),
         images = input.images.map(imageApiToDataMapper::toData),
-            
+
         title = input.title,
         description = input.description,
         status = statusApiToDataMapper.toData(input.status),
@@ -72,7 +68,7 @@ class MostWantedPersonApiToDataMapper(
 
         possibleStates = input.possibleStates.orEmpty(),
         possibleCountries = input.possibleCountries.orEmpty(),
-            
+
         caution = input.caution.orEmpty(),
         modified = input.modified,
 
@@ -80,6 +76,6 @@ class MostWantedPersonApiToDataMapper(
 
         ncic = input.ncic.orEmpty(),
 
-        fieldOffices = input.fieldOffices.orEmpty(),
+        fieldOffices = input.fieldOffices.orEmpty()
     )
 }
