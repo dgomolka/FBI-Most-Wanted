@@ -3,8 +3,6 @@ package com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.mapper
 import com.psycodeinteractive.fbimostwanted.data.contract.mapper.DatabaseToDataMapper
 import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.model.MostWantedPersonDataModel
 import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.source.local.MostWantedPersonDatabaseModel
-import com.psycodeinteractive.fbimostwanted.domain.contract.mapper.DataToDomainMapper
-import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.model.MostWantedPersonDomainModel
 
 class MostWantedPersonDatabaseToDataMapper(
     private val sexDatabaseToDataMapper: SexDatabaseToDataMapper,
