@@ -1,16 +1,17 @@
 package com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.mapper
 
+import com.psycodeinteractive.fbimostwanted.data.contract.mapper.ApiToDataMapper
 import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.model.MostWantedPersonDataModel
 import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.model.SexDataModel.Unspecified
 import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.model.remote.MostWantedPersonApiModel
-import com.psycodeinteractive.fbimostwanted.domain.contract.mapper.DataToDomainMapper
+import com.psycodeinteractive.fbimostwanted.domain.extension.orZero
 
 class MostWantedPersonApiToDataMapper(
     private val sexApiToDataMapper: SexApiToDataMapper,
     private val fileApiToDataMapper: FileApiToDataMapper,
     private val imageApiToDataMapper: ImageApiToDataMapper,
     private val statusApiToDataMapper: StatusApiToDataMapper
-) : DataToDomainMapper<MostWantedPersonApiModel, MostWantedPersonDataModel>() {
+) : ApiToDataMapper<MostWantedPersonApiModel, MostWantedPersonDataModel>() {
     override fun map(input: MostWantedPersonApiModel) = MostWantedPersonDataModel(
         uid = input.uid,
         id = input.id,
@@ -43,16 +44,16 @@ class MostWantedPersonApiToDataMapper(
         eyes = input.eyes.orEmpty(),
         eyesRaw = input.eyesRaw.orEmpty(),
 
-        ageMin = input.ageMin ?: 0,
-        ageMax = input.ageMax ?: 0,
+        ageMin = input.ageMin.orZero(),
+        ageMax = input.ageMax.orZero(),
         ageRange = input.ageRange.orEmpty(),
 
         weight = input.weight.orEmpty(),
-        weightMin = input.weightMin ?: 0,
-        weightMax = input.weightMax ?: 0,
+        weightMin = input.weightMin.orZero(),
+        weightMax = input.weightMax.orZero(),
 
-        heightMin = input.heightMin ?: 0,
-        heightMax = input.heightMax ?: 0,
+        heightMin = input.heightMin.orZero(),
+        heightMax = input.heightMax.orZero(),
 
         rewardMin = input.rewardMin,
         rewardMax = input.rewardMax,

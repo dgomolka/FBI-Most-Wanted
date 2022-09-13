@@ -17,7 +17,9 @@ import com.psycodeinteractive.fbimostwanted.ui.R
 import com.psycodeinteractive.fbimostwanted.ui.Screen
 import com.psycodeinteractive.fbimostwanted.ui.observeWithLifecycle
 import kotlinx.coroutines.delay
-import javax.inject.Inject
+import me.tatarka.inject.annotations.Inject
+
+typealias SplashScreen = @Composable (onSplashFinished: () -> Unit) -> Unit
 
 @Inject
 @Composable
@@ -25,7 +27,7 @@ fun SplashScreen(
     provideSplashViewModel: () -> SplashViewModel,
     onSplashFinished: () -> Unit
 ) {
-    Screen(provideSplashViewModel) { viewModel ->
+    Screen(provideSplashViewModel) { viewModel, _ ->
         Splash()
         HandleEvents(viewModel, onSplashFinished)
     }

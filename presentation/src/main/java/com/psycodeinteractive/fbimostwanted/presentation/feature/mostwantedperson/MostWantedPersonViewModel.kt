@@ -4,7 +4,9 @@ import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.model.Most
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.usecase.GetMostWantedPersonUseCase
 import com.psycodeinteractive.fbimostwanted.presentation.BaseViewModel
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.mapper.MostWantedPersonDomainToPresentationMapper
+import me.tatarka.inject.annotations.Inject
 
+@Inject
 class MostWantedPersonViewModel(
     private val getMostWantedPersonUseCase: GetMostWantedPersonUseCase,
     private val mostWantedPersonDomainToPresentationMapper: MostWantedPersonDomainToPresentationMapper

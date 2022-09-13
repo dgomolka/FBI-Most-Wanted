@@ -1,0 +1,66 @@
+import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.model.local.ImageDatabaseModel;
+import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.model.local.FileDatabaseModel;
+import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.model.local.SexDatabaseModel;
+import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.model.local.StatusDatabaseModel;
+import kotlin.collections.List;
+
+CREATE TABLE MostWantedPersonDatabaseModel (
+    uid TEXT NOT NULL PRIMARY KEY,
+    id TEXT NOT NULL,
+    rewardText TEXT NOT NULL,
+    aliases TEXT AS List<String> NOT NULL,
+    publication TEXT NOT NULL,
+    url TEXT NOT NULL,
+    warningMessage TEXT NOT NULL,
+    details TEXT NOT NULL,
+    occupations TEXT AS List<String> NOT NULL,
+    nationality TEXT NOT NULL,
+    placeOfBirth TEXT NOT NULL,
+    datesOfBirthUsed TEXT AS List<String> NOT NULL,
+    languages TEXT AS List<String> NOT NULL,
+    sex TEXT AS SexDatabaseModel NOT NULL,
+    scarsAndMarks TEXT NOT NULL,
+    complexion TEXT NOT NULL,
+    race TEXT NOT NULL,
+    raceRaw TEXT NOT NULL,
+    build TEXT NOT NULL,
+    hair TEXT NOT NULL,
+    hairRaw TEXT NOT NULL,
+    eyes TEXT NOT NULL,
+    eyesRaw TEXT NOT NULL,
+    ageMin INTEGER AS Int NOT NULL,
+    ageMax INTEGER AS Int NOT NULL,
+    ageRange TEXT NOT NULL,
+    weightMin INTEGER AS Int NOT NULL,
+    weightMax INTEGER AS Int NOT NULL,
+    weight TEXT NOT NULL,
+    heightMin INTEGER AS Int NOT NULL,
+    heightMax INTEGER AS Int NOT NULL,
+    rewardMin INTEGER AS Int NOT NULL,
+    rewardMax INTEGER AS Int NOT NULL,
+    files TEXT AS List<FileDatabaseModel> NOT NULL,
+    images TEXT AS List<ImageDatabaseModel> NOT NULL,
+    title TEXT NOT NULL,
+    description TEXT NOT NULL,
+    status TEXT AS StatusDatabaseModel NOT NULL,
+    remarks TEXT NOT NULL,
+    path TEXT NOT NULL,
+    possibleStates TEXT AS List<String> NOT NULL,
+    possibleCountries TEXT AS List<String> NOT NULL,
+    caution TEXT NOT NULL,
+    modified TEXT NOT NULL,
+    subjects TEXT AS List<String> NOT NULL,
+    ncic TEXT NOT NULL,
+    fieldOffices TEXT AS List<String> NOT NULL
+);
+
+insertMostWantedPerson:
+INSERT INTO MostWantedPersonDatabaseModel
+VALUES ?;
+
+removeMostWantedPerson:
+DELETE FROM MostWantedPersonDatabaseModel;
+
+selectAllMostWanted:
+SELECT MostWantedPersonDatabaseModel.*
+FROM MostWantedPersonDatabaseModel;

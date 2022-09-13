@@ -7,23 +7,26 @@ import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.MostWantedPersonViewModel
 import com.psycodeinteractive.fbimostwanted.ui.Screen
 import com.psycodeinteractive.fbimostwanted.ui.collectViewState
-import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.mapper.MostWantedPersonPresentationToUiMapper
 import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedlist.model.MostWantedListTopBarResourcesUiModel
+import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.mapper.MostWantedPersonPresentationToUiMapper
 import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.model.MostWantedPersonUiModel
 import com.psycodeinteractive.fbimostwanted.ui.observeWithLifecycle
 import com.psycodeinteractive.fbimostwanted.ui.widget.topbar.TopBar
 import javax.inject.Inject
 
+typealias MostWantedPersonScreen = @Composable (personId: String) -> Unit
+
 @Inject
 @Composable
 fun MostWantedPersonScreen(
-    personId: String,
     provideMostWantedPersonViewModel: () -> MostWantedPersonViewModel,
-    provideTopBarResources: () -> MostWantedListTopBarResourcesUiModel,
-    mostWantedPersonPresentationToUiMapper: MostWantedPersonPresentationToUiMapper
+    topBarResources: MostWantedListTopBarResourcesUiModel,
+    mostWantedPersonPresentationToUiMapper: MostWantedPersonPresentationToUiMapper,
+    personId: String
 ) {
     Screen(provideMostWantedPersonViewModel) { viewModel, lifecycleScope ->
         lifecycleScope.launchWhenCreated {
@@ -40,7 +43,7 @@ fun MostWantedPersonScreen(
         ) {
             // Toolbar - Number on the list
             TopBar(
-                resources = provideTopBarResources()
+                resources = topBarResources
             )
             Divider(
                 color = topDividerColor
@@ -54,7 +57,7 @@ fun MostWantedPersonScreen(
 private fun HandleEvents(viewModel: MostWantedPersonViewModel) {
     viewModel.eventFlow.observeWithLifecycle { event ->
         when (event) {
-
+            else -> {}
         }
     }
 }
@@ -71,7 +74,8 @@ private fun MostWantedPersonDetails(mostWantedPerson: MostWantedPersonUiModel?) 
             // From
             // Last seen - time and place
         } else {
-
         }
     }
 }
+
+private val topDividerColor = Color.LightGray.copy(0.35f)

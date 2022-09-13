@@ -16,29 +16,29 @@ data class MostWantedPersonApiModel(
     val warningMessage: String? = null,
 
     @SerialName("age_max")
-    val ageMax: Long? = null,
+    val ageMax: Int? = null,
 
     @SerialName("weight_min")
-    val weightMin: Long? = null,
+    val weightMin: Int? = null,
 
     @SerialName("height_min")
-    val heightMin: Long? = null,
+    val heightMin: Int? = null,
 
     @SerialName("field_offices")
     val fieldOffices: List<String>? = null,
 
     @SerialName("age_min")
-    val ageMin: Long? = null,
+    val ageMin: Int? = null,
 
     val occupations: List<String>? = null,
 
     @SerialName("height_max")
-    val heightMax: Long? = null,
+    val heightMax: Int? = null,
 
     val details: String? = null,
 
     @SerialName("weight_max")
-    val weightMax: Long? = null,
+    val weightMax: Int? = null,
 
     val sex: SexApiModel? = null,
 
@@ -48,12 +48,12 @@ data class MostWantedPersonApiModel(
     val build: String? = null,
 
     @SerialName("reward_max")
-    val rewardMax: Long,
+    val rewardMax: Int,
 
     val nationality: String? = null,
 
     @SerialName("reward_min")
-    val rewardMin: Long,
+    val rewardMin: Int,
 
     val caution: String? = null,
     val race: String? = null,

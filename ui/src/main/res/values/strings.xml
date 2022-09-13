@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">FBI Most Wanted</string>
     <string name="save">Save</string>
+    <string name="no_fetched_entries">No fetched entries</string>
 </resources>

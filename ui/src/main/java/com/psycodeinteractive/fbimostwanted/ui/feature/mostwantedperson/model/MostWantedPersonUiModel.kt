@@ -33,19 +33,19 @@ class MostWantedPersonUiModel(
     val eyes: String,
     val eyesRaw: String,
 
-    val ageMin: Long,
-    val ageMax: Long,
+    val ageMin: Int,
+    val ageMax: Int,
     val ageRange: String,
 
     val weight: String,
-    val weightMin: Long,
-    val weightMax: Long,
+    val weightMin: Int,
+    val weightMax: Int,
 
-    val heightMin: Long,
-    val heightMax: Long,
+    val heightMin: Int,
+    val heightMax: Int,
 
-    val rewardMin: Long,
-    val rewardMax: Long,
+    val rewardMin: Int,
+    val rewardMax: Int,
 
     val files: List<FileUiModel>,
     val images: List<ImageUiModel>,

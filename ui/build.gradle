@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id "com.google.devtools.ksp"
 }
 
 android {
@@ -48,6 +49,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation "javax.inject:javax.inject:$javax_inject_version"
+
+    ksp("me.tatarka.inject:kotlin-inject-compiler-ksp:0.5.1")
+    implementation("me.tatarka.inject:kotlin-inject-runtime:0.5.1")
 
     // Integration with activities
     implementation 'androidx.activity:activity-compose:1.5.1'

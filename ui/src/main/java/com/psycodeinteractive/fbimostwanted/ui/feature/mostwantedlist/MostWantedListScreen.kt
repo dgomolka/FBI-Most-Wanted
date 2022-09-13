@@ -27,20 +27,23 @@ import androidx.compose.ui.unit.dp
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedlist.MostWantedListViewModel
 import com.psycodeinteractive.fbimostwanted.ui.Screen
 import com.psycodeinteractive.fbimostwanted.ui.collectViewState
-import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.mapper.MostWantedPersonPresentationToUiMapper
 import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedlist.model.MostWantedListTopBarResourcesUiModel
+import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.mapper.MostWantedPersonPresentationToUiMapper
 import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.model.MostWantedPersonUiModel
 import com.psycodeinteractive.fbimostwanted.ui.observeWithLifecycle
 import com.psycodeinteractive.fbimostwanted.ui.themeTypography
 import com.psycodeinteractive.fbimostwanted.ui.widget.FBIMostWantedLazyColumn
 import com.psycodeinteractive.fbimostwanted.ui.widget.topbar.TopBar
-import javax.inject.Inject
+import me.tatarka.inject.annotations.Inject
+
+typealias MostWantedListScreen = @Composable (
+    goToPersonDetails: (personId: Long) -> Unit
+) -> Unit
 
 @Inject
 @Composable
 fun MostWantedListScreen(
     provideMostWantedListViewModel: () -> MostWantedListViewModel,
-    provideTopBarResources: () -> MostWantedListTopBarResourcesUiModel,
     mostWantedPersonPresentationToUiMapper: MostWantedPersonPresentationToUiMapper,
     goToPersonDetails: (personId: Long) -> Unit
 ) {
@@ -54,7 +57,7 @@ fun MostWantedListScreen(
             modifier = Modifier.fillMaxSize()
         ) {
             TopBar(
-                resources = provideTopBarResources()
+                resources = MostWantedListTopBarResourcesUiModel
             )
             Divider(
                 color = topDividerColor
@@ -77,6 +80,7 @@ private fun HandleEvents(viewModel: MostWantedListViewModel) {
     viewModel.eventFlow.observeWithLifecycle { event ->
         when (event) {
 
+            else -> {}
         }
     }
 }

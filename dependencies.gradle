@@ -1,16 +1,16 @@
 ext {
     android_gradle_version = '7.1.3'
-    kotlin_version = '1.6.21'
-    android_version = "7.2.1"
-    ksp_version = "1.6.21-1.0.6"
-    kotlinx_serialization_version = "1.4.0-RC"
+    kotlin_version = '1.7.10'
+    android_version = "7.2.2"
+    ksp_version = "1.7.10-1.0.6"
+    kotlinx_serialization_version = "1.4.0"
     hilt_gradle_version = "2.38.1"
-    sql_delight_version = "1.5.3"
-    kotlinx_coroutines_version = "1.6.1-native-mt"
-    ktor_version = "2.0.3"
+    sql_delight_version = "2.0.0-SNAPSHOT"
+    kotlinx_coroutines_version = "1.6.3-native-mt"
+    ktor_version = "2.1.1"
     jetbrains_annotations_version = '18.0.0'
-    compose_kotlin_compiler_extension_version = "1.2.0"
-    mockative_version = "1.2.3"
+    compose_kotlin_compiler_extension_version = "1.3.1"
+    mockative_version = "1.2.6"
     javax_inject_version = "1"
     androidx_multidex_version = "2.0.1"
 }
@@ -20,6 +20,7 @@ static def addRepos(RepositoryHandler handler) {
     handler.mavenCentral()
     handler.maven { url "https://maven.google.com" }
     handler.maven { url "https://plugins.gradle.org/m2/" }
+    handler.maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 
 ext.addRepos = this.&addRepos

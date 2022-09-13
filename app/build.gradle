@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id "com.google.devtools.ksp"
 }
 
 android {
@@ -34,6 +35,9 @@ android {
 dependencies {
     implementation project(":ui")
     implementation project(":domain")
+    implementation project(":data")
     implementation "javax.inject:javax.inject:$javax_inject_version"
     implementation "androidx.multidex:multidex:$androidx_multidex_version"
+    ksp("me.tatarka.inject:kotlin-inject-compiler-ksp:0.5.1")
+    implementation("me.tatarka.inject:kotlin-inject-runtime:0.5.1")
 }

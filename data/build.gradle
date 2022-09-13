@@ -68,13 +68,7 @@ android {
 }
 
 sqldelight {
-    AppDatabaseCommon {
-        packageName = "com.psycodeinteractive.fbimostwanted.data.cache"
+    MostWantedAppDatabase {
+        packageName = "com.psycodeinteractive.fbimostwanted.data.source.local"
     }
-}
-
-afterEvaluate {
-    def generateAndroidDebugAppDatabaseCommonInterface = tasks.getByName('generateSqlDelightInterface')
-    tasks.getByName('compileDebugKotlinAndroid').dependsOn(generateAndroidDebugAppDatabaseCommonInterface)
-    tasks.getByName('compileReleaseKotlinAndroid').dependsOn(generateAndroidDebugAppDatabaseCommonInterface)
 }

@@ -2,7 +2,7 @@ package com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.usecase
 
 import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.BackgroundExecutionUseCase
 import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.BaseUseCase
-import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.PlatformCoroutineContextProvider
+import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.CoroutineContextProvider
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.model.MostWantedPersonDomainModel
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.repository.MostWantedRepository
 import kotlinx.coroutines.CoroutineScope
@@ -11,7 +11,7 @@ interface GetMostWantedListUseCase : BaseUseCase<Unit, List<MostWantedPersonDoma
 
 class GetMostWantedListUseCaseImpl(
     private val mostWantedRepository: MostWantedRepository,
-    coroutineContextProvider: PlatformCoroutineContextProvider
+    coroutineContextProvider: CoroutineContextProvider
 ) : GetMostWantedListUseCase, BackgroundExecutionUseCase<Unit, List<MostWantedPersonDomainModel>>(coroutineContextProvider) {
     override suspend fun executeInBackground(request: Unit, coroutineScope: CoroutineScope) =
         mostWantedRepository.getMostWantedList()
