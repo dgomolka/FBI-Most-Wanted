@@ -9,13 +9,15 @@ import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.source.local
 import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.source.remote.MostWantedService
 import com.psycodeinteractive.fbimostwanted.data.source.DataSource
 
+typealias MostWantedPersonCache = Cache<List<MostWantedPersonDataModel>>
+
 class MostWantedDataSource(
     private val mostWantedService: MostWantedService,
     private val mostWantedPersonQueries: MostWantedPersonQueries,
     private val mostWantedPersonApiToDataMapper: MostWantedPersonApiToDataMapper,
     private val mostWantedPersonDatabaseToDataMapper: MostWantedPersonDatabaseToDataMapper,
     private val mostWantedPersonDataToDatabaseMapper: MostWantedPersonDataToDatabaseMapper,
-    private val cache: Cache<List<MostWantedPersonDataModel>>
+    private val cache: MostWantedPersonCache
 ) : DataSource<List<MostWantedPersonDataModel>> {
     override suspend fun initialize() {
         cache.emit { fetchLocal() }
