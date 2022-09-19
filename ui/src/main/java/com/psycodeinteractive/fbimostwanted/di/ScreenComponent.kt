@@ -4,7 +4,7 @@ import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedlist.MostWanted
 import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.MostWantedPersonScreen
 import com.psycodeinteractive.fbimostwanted.ui.feature.splash.SplashScreen
 
-interface ScreenGraphComponent {
+interface ScreenComponent {
     val splashScreen: SplashScreen
     val mostWantedListScreen: MostWantedListScreen
     val mostWantedPersonScreen: MostWantedPersonScreen

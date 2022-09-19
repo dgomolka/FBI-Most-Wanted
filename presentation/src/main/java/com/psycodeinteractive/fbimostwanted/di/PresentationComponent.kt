@@ -8,14 +8,9 @@ import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperso
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.mapper.MostWantedPersonDomainToPresentationMapper
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.mapper.SexDomainToPresentationMapper
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.mapper.StatusDomainToPresentationMapper
-import me.tatarka.inject.annotations.Component
 import me.tatarka.inject.annotations.Provides
 
-@Component
-abstract class PresentationComponent(
-    @Component val domainComponent: DomainComponent,
-    @Component val loggerComponent: LoggerComponent
-) {
+interface PresentationComponent {
     @Provides
     fun providesUseCaseExecutorProvider(logger: Logger): UseCaseExecutorProvider =
         { coroutineScope -> UseCaseExecutor(coroutineScope, logger) }

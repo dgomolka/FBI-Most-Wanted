@@ -38,10 +38,8 @@ import com.psycodeinteractive.fbimostwanted.data.network.NetworkClient
 import com.psycodeinteractive.fbimostwanted.data.source.local.MostWantedAppDatabase
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.repository.MostWantedRepository
 import com.squareup.sqldelight.EnumColumnAdapter
-import me.tatarka.inject.annotations.Component
 import me.tatarka.inject.annotations.Provides
 
-@Component
 interface DataComponent {
     @Provides
     fun providesMostWantedApplicationDatabase(

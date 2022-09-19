@@ -1,14 +1,10 @@
 package com.psycodeinteractive.fbimostwanted.data
 
-import android.app.Application
+import android.content.Context
 import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.source.local.DatabaseDriverFactory
-import me.tatarka.inject.annotations.Component
 import me.tatarka.inject.annotations.Provides
 
-@Component
-abstract class PlatformDataComponent {
+interface PlatformDataComponent {
     @Provides
-    fun providesDatabaseDriverFactory(application: Application) = DatabaseDriverFactory(application)
+    fun providesDatabaseDriverFactory(context: Context) = DatabaseDriverFactory(context)
 }
-
-val platformDataComponent = PlatformDataComponent::class.create()

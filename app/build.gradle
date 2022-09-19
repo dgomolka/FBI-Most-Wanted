@@ -31,6 +31,12 @@ android {
     kotlinOptions {
         jvmTarget = compile_jvm_target
     }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = compose_kotlin_compiler_extension_version
+    }
     sourceSets {
         // allows android studio to see ksp generated code
         debug.java {

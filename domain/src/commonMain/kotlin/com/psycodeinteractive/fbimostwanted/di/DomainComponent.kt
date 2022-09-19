@@ -7,13 +7,9 @@ import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.usecase.Ge
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.usecase.GetMostWantedListUseCaseImpl
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.usecase.GetMostWantedPersonUseCase
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.usecase.GetMostWantedPersonUseCaseImpl
-import me.tatarka.inject.annotations.Component
 import me.tatarka.inject.annotations.Provides
 
-@Component
-abstract class DomainComponent(
-    @Component val dataComponent: DataComponent
-) {
+interface DomainComponent {
 
     @Provides
     fun provideCoroutineContextProvider(): CoroutineContextProvider =
@@ -31,5 +27,3 @@ abstract class DomainComponent(
         coroutineContextProvider: CoroutineContextProvider
     ): GetMostWantedPersonUseCase = GetMostWantedPersonUseCaseImpl(mostWantedRepository, coroutineContextProvider)
 }
-
-val domainComponent = DomainComponent::class.create(dataComponent)

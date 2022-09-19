@@ -3,23 +3,16 @@ package com.psycodeinteractive.fbimostwanted.ui.feature.launch
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
-import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedlist.MostWantedListScreen
-import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.MostWantedPersonScreen
-import com.psycodeinteractive.fbimostwanted.ui.feature.splash.SplashScreen
-
-
+import com.psycodeinteractive.fbimostwanted.di.ScreenComponent
 
 abstract class LaunchActivity : ComponentActivity() {
 
     fun setupScreens(
-        splashScreen: SplashScreen,
-        mostWantedListScreen: MostWantedListScreen,
-        mostWantedPersonScreen: MostWantedPersonScreen
+        screenComponent: ScreenComponent
     ) {
         setContent {
 //            Theme {
-            splashScreen {
-
+            screenComponent.splashScreen {
             }
         }
     }

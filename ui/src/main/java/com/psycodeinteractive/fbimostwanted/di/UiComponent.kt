@@ -5,25 +5,23 @@ import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.mapper.I
 import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.mapper.MostWantedPersonPresentationToUiMapper
 import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.mapper.SexPresentationToUiMapper
 import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.mapper.StatusPresentationToUiMapper
-import me.tatarka.inject.annotations.Component
 import me.tatarka.inject.annotations.Provides
 
-@Component
-abstract class UiComponent {
+interface UiComponent {
     @Provides
-    public fun providesSexPresentationToUiMapper() = SexPresentationToUiMapper()
+    fun providesSexPresentationToUiMapper() = SexPresentationToUiMapper()
 
     @Provides
-    public fun providesFilePresentationToUiMapper() = FilePresentationToUiMapper()
+    fun providesFilePresentationToUiMapper() = FilePresentationToUiMapper()
 
     @Provides
-    public fun providesImagePresentationToUiMapper() = ImagePresentationToUiMapper()
+    fun providesImagePresentationToUiMapper() = ImagePresentationToUiMapper()
 
     @Provides
-    public fun providesStatusPresentationToUiMapper() = StatusPresentationToUiMapper()
+    fun providesStatusPresentationToUiMapper() = StatusPresentationToUiMapper()
 
     @Provides
-    public fun providesMostWantedPersonPresentationToUiMapper(
+    fun providesMostWantedPersonPresentationToUiMapper(
         sexPresentationToUiMapper: SexPresentationToUiMapper,
         filePresentationToUiMapper: FilePresentationToUiMapper,
         imagePresentationToUiMapper: ImagePresentationToUiMapper,
