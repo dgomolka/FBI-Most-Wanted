@@ -1,28 +1,27 @@
 package com.psycodeinteractive.fbimostwanted.ui.feature.launch
 
-import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
-import androidx.fragment.app.FragmentActivity
-import com.psycodeinteractive.fbimostwanted.di.ScreenComponent
+import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedlist.MostWantedListScreen
+import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.MostWantedPersonScreen
+import com.psycodeinteractive.fbimostwanted.ui.feature.splash.SplashScreen
 
-class LaunchActivity : FragmentActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
+abstract class LaunchActivity : ComponentActivity() {
+
+    fun setupScreens(
+        splashScreen: SplashScreen,
+        mostWantedListScreen: MostWantedListScreen,
+        mostWantedPersonScreen: MostWantedPersonScreen
+    ) {
         setContent {
 //            Theme {
-                ViewRoot()
-//            }
+            splashScreen {
+
+            }
         }
-    }
-
-    @Composable
-    fun ViewRoot() {
-//        ScreenComponent::class.create()
-//        Navigation()
-
     }
 }
 

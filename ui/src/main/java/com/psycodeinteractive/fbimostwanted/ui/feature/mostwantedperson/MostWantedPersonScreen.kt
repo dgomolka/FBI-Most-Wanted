@@ -16,7 +16,7 @@ import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.mapper.M
 import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.model.MostWantedPersonUiModel
 import com.psycodeinteractive.fbimostwanted.ui.observeWithLifecycle
 import com.psycodeinteractive.fbimostwanted.ui.widget.topbar.TopBar
-import javax.inject.Inject
+import me.tatarka.inject.annotations.Inject
 
 typealias MostWantedPersonScreen = @Composable (personId: String) -> Unit
 
@@ -24,7 +24,6 @@ typealias MostWantedPersonScreen = @Composable (personId: String) -> Unit
 @Composable
 fun MostWantedPersonScreen(
     provideMostWantedPersonViewModel: () -> MostWantedPersonViewModel,
-    topBarResources: MostWantedListTopBarResourcesUiModel,
     mostWantedPersonPresentationToUiMapper: MostWantedPersonPresentationToUiMapper,
     personId: String
 ) {
@@ -43,7 +42,7 @@ fun MostWantedPersonScreen(
         ) {
             // Toolbar - Number on the list
             TopBar(
-                resources = topBarResources
+                resources = MostWantedListTopBarResourcesUiModel
             )
             Divider(
                 color = topDividerColor

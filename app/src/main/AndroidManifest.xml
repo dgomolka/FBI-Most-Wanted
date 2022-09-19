@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.psycodeinteractive.fbimostwanted">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".FBIMostWantedApplication"
         android:allowBackup="true"
@@ -13,9 +15,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FBIMostWanted"
+        tools:ignore="LockedOrientationActivity"
         tools:targetApi="31">
+        <activity
+            android:name=".feature.launch.AppLaunchActivity"
+            android:launchMode="singleTask"
+            android:alwaysRetainTaskState="true"
+            android:screenOrientation="portrait"
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

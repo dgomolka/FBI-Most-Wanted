@@ -37,6 +37,29 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = compose_kotlin_compiler_extension_version
     }
+    sourceSets {
+        // allows android studio to see ksp generated code
+        debug.java {
+            srcDir("build/generated/ksp/debug/kotlin")
+        }
+        release.java {
+            srcDir("build/generated/ksp/release/kotlin")
+        }
+        testDebug.java {
+            srcDir("build/generated/ksp/debugUnitTest/kotlin")
+        }
+        androidTestDebug.java {
+            srcDir("build/generated/ksp/debugAndroidTest/kotlin")
+        }
+        // share code between unit and android tests
+        test.java {
+            srcDir("src/commonTest/java")
+        }
+    }
+}
+
+ksp {
+    arg("me.tatarka.inject.dumpGraph", "true")
 }
 
 dependencies {
@@ -50,8 +73,8 @@ dependencies {
 
     implementation "javax.inject:javax.inject:$javax_inject_version"
 
-    ksp("me.tatarka.inject:kotlin-inject-compiler-ksp:0.5.1")
-    implementation("me.tatarka.inject:kotlin-inject-runtime:0.5.1")
+    ksp("me.tatarka.inject:kotlin-inject-compiler-ksp:$kotlin_inject_version")
+    implementation("me.tatarka.inject:kotlin-inject-runtime:$kotlin_inject_version")
 
     // Integration with activities
     implementation 'androidx.activity:activity-compose:1.5.1'

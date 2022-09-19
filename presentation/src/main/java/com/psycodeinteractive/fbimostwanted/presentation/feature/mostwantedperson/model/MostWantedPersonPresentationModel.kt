@@ -37,7 +37,7 @@ data class MostWantedPersonPresentationModel(
     val ageMax: Int,
     val ageRange: String,
 
-    val weight: Int,
+    val weight: String,
     val weightMin: Int,
     val weightMax: Int,
 

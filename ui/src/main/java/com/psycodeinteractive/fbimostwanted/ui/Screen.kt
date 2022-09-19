@@ -1,7 +1,6 @@
 package com.psycodeinteractive.fbimostwanted.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -29,7 +28,6 @@ import com.psycodeinteractive.fbimostwanted.presentation.ViewState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 inline fun <reified VM : BaseViewModel<out ViewState, out Event>> Screen(
     crossinline provideViewModel: () -> VM,

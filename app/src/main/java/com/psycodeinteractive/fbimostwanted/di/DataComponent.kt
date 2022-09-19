@@ -1,6 +1,5 @@
 package com.psycodeinteractive.fbimostwanted.di
 
-import android.app.Application
 import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.mapper.FileApiToDataMapper
 import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.mapper.FileDataToDatabaseMapper
 import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.mapper.FileDataToDomainMapper
@@ -39,13 +38,11 @@ import com.psycodeinteractive.fbimostwanted.data.network.NetworkClient
 import com.psycodeinteractive.fbimostwanted.data.source.local.MostWantedAppDatabase
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.repository.MostWantedRepository
 import com.squareup.sqldelight.EnumColumnAdapter
+import me.tatarka.inject.annotations.Component
 import me.tatarka.inject.annotations.Provides
 
-class DataComponent {
-
-    @Provides
-    fun providesDatabaseDriverFactory(application: Application) = DatabaseDriverFactory(application)
-
+@Component
+interface DataComponent {
     @Provides
     fun providesMostWantedApplicationDatabase(
         databaseDriverFactory: DatabaseDriverFactory
@@ -199,4 +196,15 @@ class DataComponent {
         statusDataToDatabaseMapper
     )
 
+    @Provides
+    fun providesSexDataToDatabaseMapper() = SexDataToDatabaseMapper()
+
+    @Provides
+    fun providesFileDataToDatabaseMapper() = FileDataToDatabaseMapper()
+
+    @Provides
+    fun providesImageDataToDatabaseMapper() = ImageDataToDatabaseMapper()
+
+    @Provides
+    fun providesStatusDataToDatabaseMapper() = StatusDataToDatabaseMapper()
 }

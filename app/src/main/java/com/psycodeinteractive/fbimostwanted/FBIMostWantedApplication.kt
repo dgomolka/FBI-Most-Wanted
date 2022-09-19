@@ -9,4 +9,9 @@ class FBIMostWantedApplication : Application() {
         super.attachBaseContext(base)
         MultiDex.install(this)
     }
+
+    override fun onCreate() {
+        super.onCreate()
+//        ApplicationComponent::class.create(screenComponent, DataComponent::class.create(), PlatformDataComponent::class.create())
+    }
 }

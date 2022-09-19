@@ -7,4 +7,4 @@ interface CoroutineContextProvider {
     val io: CoroutineContext
 }
 
-expect class PlatformCoroutineContextProvider : CoroutineContextProvider
+expect object PlatformCoroutineContextProvider : CoroutineContextProvider

@@ -8,8 +8,8 @@ import me.tatarka.inject.annotations.Inject
 
 @Inject
 class MostWantedPersonViewModel(
-    private val getMostWantedPersonUseCase: GetMostWantedPersonUseCase,
-    private val mostWantedPersonDomainToPresentationMapper: MostWantedPersonDomainToPresentationMapper
+    private val mostWantedPersonDomainToPresentationMapper: MostWantedPersonDomainToPresentationMapper,
+    private val getMostWantedPersonUseCase: GetMostWantedPersonUseCase
 ) : BaseViewModel<MostWantedPersonViewState, MostWantedPersonEvent>() {
 
     override val initialViewState = MostWantedPersonViewState()

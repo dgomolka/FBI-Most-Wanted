@@ -4,27 +4,30 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.psycodeinteractive.fbimostwanted.domain.execution.UseCaseExecutor
 import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.BaseUseCase
+import com.psycodeinteractive.fbimostwanted.domain.logger.PlatformLogger
 import com.psycodeinteractive.fbimostwanted.presentation.execution.UseCaseExecutorProvider
 import com.psycodeinteractive.fbimostwanted.presentation.mapper.DefaultDomainToPresentationExceptionMapper
 import com.psycodeinteractive.fbimostwanted.presentation.model.exception.PresentationException
 import com.psycodeinteractive.fbimostwanted.presentation.navigation.Destination
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import me.tatarka.inject.annotations.Inject
 
-abstract class BaseViewModel<BaseState : ViewState, BaseEvent : Event> : ViewModel() {
+@Inject
+abstract class BaseViewModel<BaseState : ViewState, BaseEvent : Event>(
+    private val useCaseExecutorProvider: UseCaseExecutorProvider = { UseCaseExecutor(CoroutineScope(IO), PlatformLogger()) },
+    private val defaultDomainToPresentationExceptionMapper: DefaultDomainToPresentationExceptionMapper = DefaultDomainToPresentationExceptionMapper()
+) : ViewModel() {
 
-    @Inject
-    private lateinit var useCaseExecutorProvider: UseCaseExecutorProvider
-
-    @Inject
-    private lateinit var defaultDomainToPresentationExceptionMapper: DefaultDomainToPresentationExceptionMapper
-
-    private val useCaseExecutor: UseCaseExecutor = useCaseExecutorProvider(viewModelScope)
+    private val useCaseExecutor: UseCaseExecutor by lazy {
+        UseCaseExecutor(CoroutineScope(IO), PlatformLogger())
+    }
 
     private val _viewState by lazy { MutableStateFlow(initialViewState.wrap()) }
     val viewState by lazy { _viewState.asStateFlow() }
