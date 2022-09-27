@@ -5,6 +5,7 @@ import com.psycodeinteractive.fbimostwanted.domain.logger.PlatformLogger
 import me.tatarka.inject.annotations.Provides
 
 interface LoggerComponent {
+    @Singleton
     @Provides
     fun providesLogger(): Logger = PlatformLogger()
 }

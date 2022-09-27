@@ -33,14 +33,18 @@ import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.source.local
 import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.source.remote.MostWantedApiService
 import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.source.remote.MostWantedService
 import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.source.remote.config.MostWantedApiConfig
+import com.psycodeinteractive.fbimostwanted.data.feature.session.AppSessionDataRepository
 import com.psycodeinteractive.fbimostwanted.data.network.ApiConfig
 import com.psycodeinteractive.fbimostwanted.data.network.NetworkClient
 import com.psycodeinteractive.fbimostwanted.data.source.local.MostWantedAppDatabase
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.repository.MostWantedRepository
+import com.psycodeinteractive.fbimostwanted.domain.feature.session.repository.AppSessionRepository
 import com.squareup.sqldelight.EnumColumnAdapter
 import me.tatarka.inject.annotations.Provides
 
 interface DataComponent {
+
+    @Singleton
     @Provides
     fun providesMostWantedApplicationDatabase(
         databaseDriverFactory: DatabaseDriverFactory
@@ -62,33 +66,40 @@ interface DataComponent {
         )
     )
 
+    @Singleton
     @Provides
     fun providesMostWantedPersonCache() = MostWantedPersonCache()
 
+    @Singleton
     @Provides
     fun providesMostWantedPersonQueries(
         mostWantedAppDatabase: MostWantedAppDatabase
     ) = mostWantedAppDatabase.mostWantedPersonQueries
 
+    @Singleton
     @Provides
     fun providesApiConfig(): ApiConfig = MostWantedApiConfig
 
+    @Singleton
     @Provides
     fun providesNetworkClient(
         apiConfig: ApiConfig
     ) = NetworkClient(apiConfig)
 
+    @Singleton
     @Provides
     fun providesMostWantedService(
         networkClient: NetworkClient
     ): MostWantedService = MostWantedApiService(networkClient)
 
+    @Singleton
     @Provides
     fun providesMostWantedRepository(
         mostWantedDataSource: MostWantedDataSource,
         mostWantedPersonDataToDomainMapper: MostWantedPersonDataToDomainMapper
     ): MostWantedRepository = MostWantedDataRepository(mostWantedDataSource, mostWantedPersonDataToDomainMapper)
 
+    @Singleton
     @Provides
     fun providesMostWantedSource(
         mostWantedService: MostWantedService,
@@ -106,6 +117,7 @@ interface DataComponent {
         mostWantedPersonCache
     )
 
+    @Singleton
     @Provides
     fun providesMostWantedPersonDataToDomainMapper(
         sexDataToDomainMapper: SexDataToDomainMapper,
@@ -119,18 +131,23 @@ interface DataComponent {
         statusDataToDomainMapper
     )
 
+    @Singleton
     @Provides
     fun providesSexDataToDomainMapper() = SexDataToDomainMapper()
 
+    @Singleton
     @Provides
     fun providesImageDataToDomainMapper() = ImageDataToDomainMapper()
 
+    @Singleton
     @Provides
     fun providesFileDataToDomainMapper() = FileDataToDomainMapper()
 
+    @Singleton
     @Provides
     fun providesStatusDataToDomainMapper() = StatusDataToDomainMapper()
 
+    @Singleton
     @Provides
     fun providesMostWantedPersonApiToDataMapper(
         sexApiToDataMapper: SexApiToDataMapper,
@@ -144,18 +161,23 @@ interface DataComponent {
         statusApiToDataMapper
     )
 
+    @Singleton
     @Provides
     fun providesSexApiToDataMapper() = SexApiToDataMapper()
 
+    @Singleton
     @Provides
     fun providesImageApiToDataMapper() = ImageApiToDataMapper()
 
+    @Singleton
     @Provides
     fun providesFileApiToDataMapper() = FileApiToDataMapper()
 
+    @Singleton
     @Provides
     fun providesStatusApiToDataMapper() = StatusApiToDataMapper()
 
+    @Singleton
     @Provides
     fun providesMostWantedPersonDatabaseToDataMapper(
         sexDatabaseToDataMapper: SexDatabaseToDataMapper,
@@ -169,18 +191,23 @@ interface DataComponent {
         statusDatabaseToDataMapper
     )
 
+    @Singleton
     @Provides
     fun providesSexDatabaseToDataMapper() = SexDatabaseToDataMapper()
 
+    @Singleton
     @Provides
     fun providesImageDatabaseToDataMapper() = ImageDatabaseToDataMapper()
 
+    @Singleton
     @Provides
     fun providesFileDatabaseToDataMapper() = FileDatabaseToDataMapper()
 
+    @Singleton
     @Provides
     fun providesStatusDatabaseToDataMapper() = StatusDatabaseToDataMapper()
 
+    @Singleton
     @Provides
     fun providesMostWantedPersonDataToDatabaseMapper(
         sexDataToDatabaseMapper: SexDataToDatabaseMapper,
@@ -194,15 +221,29 @@ interface DataComponent {
         statusDataToDatabaseMapper
     )
 
+    @Singleton
     @Provides
     fun providesSexDataToDatabaseMapper() = SexDataToDatabaseMapper()
 
+    @Singleton
     @Provides
     fun providesFileDataToDatabaseMapper() = FileDataToDatabaseMapper()
 
+    @Singleton
     @Provides
     fun providesImageDataToDatabaseMapper() = ImageDataToDatabaseMapper()
 
+    @Singleton
     @Provides
     fun providesStatusDataToDatabaseMapper() = StatusDataToDatabaseMapper()
+
+    @Singleton
+    @Provides
+    fun providesAppSessionRepository(
+        mostWantedDataSource: MostWantedDataSource
+    ): AppSessionRepository = AppSessionDataRepository(
+        listOf(
+            mostWantedDataSource
+        )
+    )
 }

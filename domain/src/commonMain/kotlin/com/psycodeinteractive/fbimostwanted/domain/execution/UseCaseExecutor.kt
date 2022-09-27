@@ -40,8 +40,10 @@ class UseCaseExecutor(
         try {
             useCase.launchExecution(value, callback)
         } catch (cancellationException: CancellationException) {
+            cancellationException.printStackTrace()
             logger.e(cancellationException.cause ?: cancellationException)
         } catch (throwable: Throwable) {
+            throwable.printStackTrace()
             logger.d(throwable)
             onError(throwable as? DomainException ?: useCase.onError(throwable))
         }

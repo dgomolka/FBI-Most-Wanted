@@ -21,13 +21,9 @@ kotlin {
     }
 
     sourceSets {
-        commonMain {
-            kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
-
-            dependencies {
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinx_coroutines_version"
-                implementation "me.tatarka.inject:kotlin-inject-runtime:$kotlin_inject_version"
-            }
+        commonMain.dependencies {
+            implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinx_coroutines_version"
+            implementation "me.tatarka.inject:kotlin-inject-runtime:$kotlin_inject_version"
         }
 
         commonTest.dependencies {
@@ -64,44 +60,14 @@ android {
     kotlinOptions {
         jvmTarget = compile_jvm_target
     }
-//    sourceSets {
-//        // allows android studio to see ksp generated code
-//        debug.java {
-//            srcDir("build/generated/ksp/debug/kotlin")
-//        }
-//        release.java {
-//            srcDir("build/generated/ksp/release/kotlin")
-//        }
-//        testDebug.java {
-//            srcDir("build/generated/ksp/debugUnitTest/kotlin")
-//        }
-//        androidTestDebug.java {
-//            srcDir("build/generated/ksp/debugAndroidTest/kotlin")
-//        }
-//        // share code between unit and android tests
-//        test.java {
-//            srcDir("src/commonTest/java")
-//        }
-//    }
 }
 
 dependencies {
-//    add("kspCommonMainMetadata", "me.tatarka.inject:kotlin-inject-compiler-ksp:0.5.1")
-//    add("kspAndroid", "me.tatarka.inject:kotlin-inject-compiler-ksp:0.5.1")
-//    add("kspIosX64", "me.tatarka.inject:kotlin-inject-compiler-ksp:0.5.1")
-
-    // The universal "ksp" configuration has performance issue and is deprecated on multiplatform since 1.0.1
-    // ksp(project(":test-processor"))
     configurations
             .findAll { it.name.startsWith("ksp") && it.name.contains("Test") }
             .forEach {
                 add(it.name, "io.mockative:mockative-processor:$mockative_version")
             }
-//    configurations
-//            .findAll { it.name.startsWith("ksp") }
-//            .forEach {
-//                add(it.name, "me.tatarka.inject:kotlin-inject-compiler-ksp:0.5.1")
-//            }
 }
 
 apply from: '../projectConfiguration.gradle'

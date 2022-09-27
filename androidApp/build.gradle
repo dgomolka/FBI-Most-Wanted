@@ -60,6 +60,7 @@ android {
 
 ksp {
     arg("me.tatarka.inject.dumpGraph", "true")
+    arg("me.tatarka.inject.enableJavaxAnnotations", "true")
 }
 
 dependencies {
@@ -67,11 +68,14 @@ dependencies {
     api project(":domain")
     api project(":data")
     api project(":presentation")
-    implementation "javax.inject:javax.inject:$javax_inject_version"
+
     implementation "androidx.multidex:multidex:$androidx_multidex_version"
-    ksp("me.tatarka.inject:kotlin-inject-compiler-ksp:$kotlin_inject_version")
-    implementation("me.tatarka.inject:kotlin-inject-runtime:$kotlin_inject_version")
-    implementation 'androidx.activity:activity-compose:1.5.1'
+    implementation "androidx.activity:activity-compose:$activity_compose_version"
+
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinx_serialization_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    implementation "javax.inject:javax.inject:$javax_inject_version"
+
+    ksp("me.tatarka.inject:kotlin-inject-compiler-ksp:$kotlin_inject_version")
+    implementation "me.tatarka.inject:kotlin-inject-runtime:$kotlin_inject_version"
 }

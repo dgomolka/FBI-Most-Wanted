@@ -2,5 +2,9 @@
 <resources>
     <string name="app_name">FBI Most Wanted</string>
     <string name="save">Save</string>
-    <string name="no_fetched_entries">No fetched entries</string>
+    <string name="no_items">No items</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="unspecified">Unspecified</string>
+    <string name="sex">Sex:</string>
 </resources>

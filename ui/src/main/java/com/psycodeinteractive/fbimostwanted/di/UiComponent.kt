@@ -8,18 +8,24 @@ import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.mapper.S
 import me.tatarka.inject.annotations.Provides
 
 interface UiComponent {
+
+    @Singleton
     @Provides
     fun providesSexPresentationToUiMapper() = SexPresentationToUiMapper()
 
+    @Singleton
     @Provides
     fun providesFilePresentationToUiMapper() = FilePresentationToUiMapper()
 
+    @Singleton
     @Provides
     fun providesImagePresentationToUiMapper() = ImagePresentationToUiMapper()
 
+    @Singleton
     @Provides
     fun providesStatusPresentationToUiMapper() = StatusPresentationToUiMapper()
 
+    @Singleton
     @Provides
     fun providesMostWantedPersonPresentationToUiMapper(
         sexPresentationToUiMapper: SexPresentationToUiMapper,

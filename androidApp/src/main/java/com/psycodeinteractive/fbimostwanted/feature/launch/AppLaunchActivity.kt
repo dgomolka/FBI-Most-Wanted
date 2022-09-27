@@ -11,11 +11,6 @@ class AppLaunchActivity : LaunchActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val applicationComponent = ApplicationComponent::class.create(application)
-//        setContent {
-//            applicationComponent.splashScreen {
-//            }
-//        }
-
         setupScreens(applicationComponent)
     }
 }

@@ -10,7 +10,14 @@ import io.ktor.client.plugins.logging.LogLevel.ALL
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.get
+import io.ktor.client.request.parameter
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.ContentType
+import io.ktor.http.ContentType.Application.Json
 import io.ktor.http.URLProtocol.Companion.HTTPS
+import io.ktor.http.append
+import io.ktor.http.contentType
+import io.ktor.http.parametersOf
 import io.ktor.http.path
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
@@ -26,6 +33,7 @@ class NetworkClient(
 ) {
     val client: HttpClient = HttpClient(httpClientEngine) {
         defaultRequest {
+            contentType(Json)
             host = apiConfig.baseUrl
             port = 0
             url {
@@ -43,16 +51,21 @@ class NetworkClient(
                 Json {
                     prettyPrint = true
                     isLenient = true
+                    ignoreUnknownKeys = true
                 }
             )
         }
     }
 
     suspend inline fun <reified Model> get(
-        path: String
+        path: String,
+        queryParameters: List<Pair<String, String>>
     ) = client.get {
         url {
             path(path)
+            queryParameters.forEach { pair -> parameter(pair.first, pair.second) }
         }
-    }.body<Model>()
+    }.run {
+        body<Model>()
+    }
 }

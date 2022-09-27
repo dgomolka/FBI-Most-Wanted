@@ -5,8 +5,8 @@ import com.psycodeinteractive.fbimostwanted.data.feature.mostwanted.model.local.
 import kotlin.collections.List;
 
 CREATE TABLE MostWantedPersonDatabaseModel (
-    uid TEXT NOT NULL PRIMARY KEY,
-    id TEXT NOT NULL,
+    id TEXT NOT NULL PRIMARY KEY,
+    uid TEXT NOT NULL,
     rewardText TEXT NOT NULL,
     aliases TEXT AS List<String> NOT NULL,
     publication TEXT NOT NULL,

@@ -8,25 +8,40 @@ import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperso
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.mapper.MostWantedPersonDomainToPresentationMapper
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.mapper.SexDomainToPresentationMapper
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.mapper.StatusDomainToPresentationMapper
+import com.psycodeinteractive.fbimostwanted.presentation.mapper.DefaultDomainToPresentationExceptionMapper
+import kotlinx.coroutines.CoroutineScope
 import me.tatarka.inject.annotations.Provides
 
 interface PresentationComponent {
-    @Provides
-    fun providesUseCaseExecutorProvider(logger: Logger): UseCaseExecutorProvider =
-        { coroutineScope -> UseCaseExecutor(coroutineScope, logger) }
 
+    @Singleton
+    @Provides
+    fun providesUseCaseExecutorProvider(logger: Logger): UseCaseExecutorProvider = object : UseCaseExecutorProvider {
+        override fun invoke(coroutineScope: CoroutineScope) = UseCaseExecutor(coroutineScope, logger)
+    }
+//        { coroutineScope -> UseCaseExecutor(coroutineScope, logger) }
+
+    @Singleton
     @Provides
     fun providesSexDomainToPresentationMapper() = SexDomainToPresentationMapper()
 
+    @Singleton
     @Provides
     fun providesFileDomainToPresentationMapper() = FileDomainToPresentationMapper()
 
+    @Singleton
     @Provides
     fun providesImageDomainToPresentationMapper() = ImageDomainToPresentationMapper()
 
+    @Singleton
     @Provides
     fun providesStatusDomainToPresentationMapper() = StatusDomainToPresentationMapper()
 
+    @Singleton
+    @Provides
+    fun providesDefaultDomainToPresentationExceptionMapper() = DefaultDomainToPresentationExceptionMapper()
+
+    @Singleton
     @Provides
     fun providesMostWantedPersonDomainToPresentationMapper(
         sexDomainToPresentationMapper: SexDomainToPresentationMapper,

@@ -1,10 +1,5 @@
 package com.psycodeinteractive.fbimostwanted.ui
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -21,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import com.psycodeinteractive.fbimostwanted.presentation.BaseViewModel
 import com.psycodeinteractive.fbimostwanted.presentation.Event
@@ -34,20 +30,7 @@ inline fun <reified VM : BaseViewModel<out ViewState, out Event>> Screen(
     crossinline children: @Composable (viewModel: VM, lifecycleScope: LifecycleCoroutineScope) -> Unit
 ) {
     val viewModel: VM = viewModel { provideViewModel() }
-
-    val animSpec = tween<Float>(screenTransitionDurationMs)
-    val transitionState = MutableTransitionState(
-        initialState = false
-    ).apply {
-        targetState = true
-    }
-    AnimatedVisibility(
-        visibleState = transitionState,
-        enter = fadeIn(animationSpec = animSpec),
-        exit = fadeOut(animationSpec = animSpec)
-    ) {
-        children(viewModel, LocalLifecycleOwner.current.lifecycleScope)
-    }
+    children(viewModel, LocalLifecycleOwner.current.lifecycleScope)
 }
 
 @Composable
@@ -73,15 +56,6 @@ VM.collectViewState(): MutableState<VS> {
     newState.value = composeState.value.state
     return newState
 }
-//
-// @Composable
-// inline fun <VM : BaseViewModel<T, out Event>, reified T : ViewState>
-//        VM.collectViewState(): MutableState<T> {
-//    val composeState = remember { mutableStateOf(getInitialState()) }
-//    val newState = state.collectAsState(StateWrapper(getInitialState()))
-//    composeState.value = newState.value.state
-//    return composeState
-// }
 
 @Composable
 inline fun <reified Model> Flow<Model>.observeWithLifecycle(
@@ -89,13 +63,24 @@ inline fun <reified Model> Flow<Model>.observeWithLifecycle(
     minActiveState: Lifecycle.State = STARTED,
     noinline action: suspend (Model) -> Unit
 ) {
+    OnLifecycle(lifecycleOwner, minActiveState) {
+        flowWithLifecycle(lifecycleOwner.lifecycle, minActiveState).collect { value -> action(value) }
+    }
+}
+
+@Composable
+fun OnLifecycle(
+    lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
+    minActiveState: Lifecycle.State = STARTED,
+    action: suspend () -> Unit
+) {
     LaunchedEffect(key1 = Unit) {
         with(lifecycleOwner) {
             lifecycleScope.launch {
-                flowWithLifecycle(lifecycle, minActiveState).collect { value -> action(value) }
+                repeatOnLifecycle(minActiveState) {
+                    action()
+                }
             }
         }
     }
 }
-
-const val screenTransitionDurationMs = 600

@@ -4,13 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.psycodeinteractive.fbimostwanted.domain.execution.UseCaseExecutor
 import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.BaseUseCase
-import com.psycodeinteractive.fbimostwanted.domain.logger.PlatformLogger
 import com.psycodeinteractive.fbimostwanted.presentation.execution.UseCaseExecutorProvider
 import com.psycodeinteractive.fbimostwanted.presentation.mapper.DefaultDomainToPresentationExceptionMapper
 import com.psycodeinteractive.fbimostwanted.presentation.model.exception.PresentationException
-import com.psycodeinteractive.fbimostwanted.presentation.navigation.Destination
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
+import com.psycodeinteractive.fbimostwanted.presentation.navigation.PresentationDestination
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,13 +18,11 @@ import me.tatarka.inject.annotations.Inject
 
 @Inject
 abstract class BaseViewModel<BaseState : ViewState, BaseEvent : Event>(
-    private val useCaseExecutorProvider: UseCaseExecutorProvider = { UseCaseExecutor(CoroutineScope(IO), PlatformLogger()) },
-    private val defaultDomainToPresentationExceptionMapper: DefaultDomainToPresentationExceptionMapper = DefaultDomainToPresentationExceptionMapper()
+    useCaseExecutorProvider: UseCaseExecutorProvider,
+    private val defaultDomainToPresentationExceptionMapper: DefaultDomainToPresentationExceptionMapper
 ) : ViewModel() {
 
-    private val useCaseExecutor: UseCaseExecutor by lazy {
-        UseCaseExecutor(CoroutineScope(IO), PlatformLogger())
-    }
+    private val useCaseExecutor: UseCaseExecutor = useCaseExecutorProvider(viewModelScope)
 
     private val _viewState by lazy { MutableStateFlow(initialViewState.wrap()) }
     val viewState by lazy { _viewState.asStateFlow() }
@@ -35,7 +30,7 @@ abstract class BaseViewModel<BaseState : ViewState, BaseEvent : Event>(
     private val _eventChannel by lazy { Channel<BaseEvent>(BUFFERED) }
     val eventFlow by lazy { _eventChannel.receiveAsFlow() }
 
-    private val _navigationCommands by lazy { Channel<Destination>(BUFFERED) }
+    private val _navigationCommands by lazy { Channel<PresentationDestination>(BUFFERED) }
     val navigationCommands by lazy { _navigationCommands.receiveAsFlow() }
 
     abstract val initialViewState: BaseState
@@ -52,7 +47,7 @@ abstract class BaseViewModel<BaseState : ViewState, BaseEvent : Event>(
         }
     }
 
-    protected fun Destination.navigate() {
+    protected fun PresentationDestination.navigate() {
         viewModelScope.launch {
             _navigationCommands.send(this@navigate)
         }

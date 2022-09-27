@@ -31,7 +31,6 @@ kotlin {
 
             implementation "com.squareup.sqldelight:runtime:$sql_delight_version"
 
-//            ksp "me.tatarka.inject:kotlin-inject-compiler-ksp:0.5.1"
             implementation "me.tatarka.inject:kotlin-inject-runtime:$kotlin_inject_version"
         }
 
@@ -48,7 +47,6 @@ kotlin {
 
         jvmMain.dependencies {
             implementation kotlin("stdlib")
-            implementation "org.jetbrains:annotations:$jetbrains_annotations_version"
             implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:$kotlinx_coroutines_version"
         }
     }

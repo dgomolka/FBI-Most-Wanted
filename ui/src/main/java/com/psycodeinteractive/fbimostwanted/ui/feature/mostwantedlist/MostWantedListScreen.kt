@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
 import androidx.compose.ui.unit.dp
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedlist.MostWantedListViewModel
+import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.MostWantedPersonPresentationDestination
 import com.psycodeinteractive.fbimostwanted.ui.Screen
 import com.psycodeinteractive.fbimostwanted.ui.collectViewState
 import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedlist.model.MostWantedListTopBarResourcesUiModel
@@ -34,24 +35,32 @@ import com.psycodeinteractive.fbimostwanted.ui.observeWithLifecycle
 import com.psycodeinteractive.fbimostwanted.ui.themeTypography
 import com.psycodeinteractive.fbimostwanted.ui.widget.FBIMostWantedLazyColumn
 import com.psycodeinteractive.fbimostwanted.ui.widget.topbar.TopBar
+import com.ramcosta.composedestinations.annotation.Destination
 import me.tatarka.inject.annotations.Inject
 
 typealias MostWantedListScreen = @Composable (
-    goToPersonDetails: (personId: Long) -> Unit
+    goToPersonDetails: (personId: String) -> Unit
 ) -> Unit
 
+@Destination
 @Inject
 @Composable
 fun MostWantedListScreen(
     provideMostWantedListViewModel: () -> MostWantedListViewModel,
     mostWantedPersonPresentationToUiMapper: MostWantedPersonPresentationToUiMapper,
-    goToPersonDetails: (personId: Long) -> Unit
+    goToPersonDetails: (personId: String) -> Unit
 ) {
     Screen(provideMostWantedListViewModel) { viewModel, _ ->
         val state by viewModel.collectViewState()
         val mostWantedPersonList = state.mostWantedPersonList.map(
             mostWantedPersonPresentationToUiMapper::toUi
         )
+        
+        viewModel.navigationCommands.observeWithLifecycle {
+            when (it) {
+                is MostWantedPersonPresentationDestination -> goToPersonDetails(it.personId)
+            }
+        }
 
         Column(
             modifier = Modifier.fillMaxSize()
@@ -79,7 +88,6 @@ fun MostWantedListScreen(
 private fun HandleEvents(viewModel: MostWantedListViewModel) {
     viewModel.eventFlow.observeWithLifecycle { event ->
         when (event) {
-
             else -> {}
         }
     }
@@ -88,7 +96,7 @@ private fun HandleEvents(viewModel: MostWantedListViewModel) {
 @Composable
 private fun MostWantedPersonListItem(
     person: MostWantedPersonUiModel,
-    onClick: (personId: Long) -> Unit
+    onClick: (personId: String) -> Unit
 ) {
     val ripple = rememberRipple(
         color = MaterialTheme.colors.primary
@@ -98,7 +106,7 @@ private fun MostWantedPersonListItem(
         modifier = Modifier.clickable(
             interactionSource = interactionSource,
             indication = ripple,
-            onClick = { onClick(1000L) } // person.id) }
+            onClick = { onClick(person.id) }
         )
     ) {
         Column(

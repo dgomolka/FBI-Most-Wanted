@@ -16,11 +16,17 @@ import com.psycodeinteractive.fbimostwanted.presentation.feature.splash.SplashVi
 import com.psycodeinteractive.fbimostwanted.ui.R
 import com.psycodeinteractive.fbimostwanted.ui.Screen
 import com.psycodeinteractive.fbimostwanted.ui.observeWithLifecycle
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
 import kotlinx.coroutines.delay
 import me.tatarka.inject.annotations.Inject
 
-typealias SplashScreen = @Composable (onSplashFinished: () -> Unit) -> Unit
+typealias SplashScreen = @Composable (
+    onSplashFinished: () -> Unit
+) -> Unit
 
+@RootNavGraph(start = true)
+@Destination
 @Inject
 @Composable
 fun SplashScreen(

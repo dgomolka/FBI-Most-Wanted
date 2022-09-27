@@ -16,6 +16,8 @@ class Cache<State> {
         with(sharedFlow) {
             if (replayCache.isNotEmpty()) return this@Cache
             mutex.withLock {
+                val newOnEmpty = onEmpty()
+                if (newOnEmpty is Collection<*> && newOnEmpty.isEmpty()) return@withLock
                 emit(onEmpty())
             }
         }
