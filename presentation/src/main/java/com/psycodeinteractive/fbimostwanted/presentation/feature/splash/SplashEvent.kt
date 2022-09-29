@@ -4,5 +4,4 @@ import com.psycodeinteractive.fbimostwanted.presentation.Event
 
 sealed class SplashEvent : Event {
     object StartSplash : SplashEvent()
-    object SplashFinished : SplashEvent()
 }

@@ -2,4 +2,4 @@ package com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedlist
 
 import com.psycodeinteractive.fbimostwanted.presentation.navigation.PresentationDestination
 
-sealed class MostWantedListPresentationDestination : PresentationDestination()
+object MostWantedListPresentationDestination : PresentationDestination()

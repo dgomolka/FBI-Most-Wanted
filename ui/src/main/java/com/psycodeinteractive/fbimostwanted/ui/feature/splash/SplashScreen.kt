@@ -10,19 +10,20 @@ import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
-import com.psycodeinteractive.fbimostwanted.presentation.feature.splash.SplashEvent.SplashFinished
 import com.psycodeinteractive.fbimostwanted.presentation.feature.splash.SplashEvent.StartSplash
 import com.psycodeinteractive.fbimostwanted.presentation.feature.splash.SplashViewModel
 import com.psycodeinteractive.fbimostwanted.ui.R
-import com.psycodeinteractive.fbimostwanted.ui.Screen
-import com.psycodeinteractive.fbimostwanted.ui.observeWithLifecycle
+import com.psycodeinteractive.fbimostwanted.ui.feature.splash.mapper.SplashScreenPresentationDestinationToNavigationCallbackMapper
+import com.psycodeinteractive.fbimostwanted.ui.screen.Screen
+import com.psycodeinteractive.fbimostwanted.ui.screen.ScreenNavigationContainer
+import com.psycodeinteractive.fbimostwanted.ui.screen.observeWithLifecycle
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import kotlinx.coroutines.delay
 import me.tatarka.inject.annotations.Inject
 
 typealias SplashScreen = @Composable (
-    onSplashFinished: () -> Unit
+    splashScreenNavigationCallbacks: SplashScreenNavigationCallbacks
 ) -> Unit
 
 @RootNavGraph(start = true)
@@ -31,11 +32,18 @@ typealias SplashScreen = @Composable (
 @Composable
 fun SplashScreen(
     provideSplashViewModel: () -> SplashViewModel,
-    onSplashFinished: () -> Unit
+    splashScreenPresentationDestinationToNavigationCallbackMapper: SplashScreenPresentationDestinationToNavigationCallbackMapper,
+    screenNavigationCallbacks: SplashScreenNavigationCallbacks
 ) {
-    Screen(provideSplashViewModel) { viewModel, _ ->
+    Screen(
+        provideViewModel = provideSplashViewModel,
+        screenNavigationContainer = ScreenNavigationContainer(
+            screenNavigationCallbacks,
+            splashScreenPresentationDestinationToNavigationCallbackMapper
+        )
+    ) { viewModel, _ ->
         Splash()
-        HandleEvents(viewModel, onSplashFinished)
+        HandleEvents(viewModel)
     }
 }
 
@@ -57,13 +65,11 @@ private fun Splash() {
 
 @Composable
 private fun HandleEvents(
-    viewModel: SplashViewModel,
-    onSplashFinished: () -> Unit
+    viewModel: SplashViewModel
 ) {
     viewModel.eventFlow.observeWithLifecycle { event ->
         when (event) {
             StartSplash -> startSplash(viewModel)
-            SplashFinished -> onSplashFinished()
         }
     }
 }

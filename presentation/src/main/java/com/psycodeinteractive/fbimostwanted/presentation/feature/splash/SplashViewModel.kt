@@ -2,7 +2,7 @@ package com.psycodeinteractive.fbimostwanted.presentation.feature.splash
 
 import com.psycodeinteractive.fbimostwanted.presentation.BaseViewModel
 import com.psycodeinteractive.fbimostwanted.presentation.execution.UseCaseExecutorProvider
-import com.psycodeinteractive.fbimostwanted.presentation.feature.splash.SplashEvent.SplashFinished
+import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedlist.MostWantedListPresentationDestination
 import com.psycodeinteractive.fbimostwanted.presentation.feature.splash.SplashEvent.StartSplash
 import com.psycodeinteractive.fbimostwanted.presentation.mapper.DefaultDomainToPresentationExceptionMapper
 import me.tatarka.inject.annotations.Inject
@@ -23,6 +23,6 @@ class SplashViewModel(
     }
 
     fun onSplashFinished() {
-        SplashFinished.dispatchEvent()
+        MostWantedListPresentationDestination.navigate()
     }
 }

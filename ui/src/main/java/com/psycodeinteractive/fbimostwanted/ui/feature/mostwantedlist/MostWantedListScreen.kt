@@ -25,13 +25,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
 import androidx.compose.ui.unit.dp
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedlist.MostWantedListViewModel
-import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.MostWantedPersonPresentationDestination
-import com.psycodeinteractive.fbimostwanted.ui.Screen
-import com.psycodeinteractive.fbimostwanted.ui.collectViewState
+import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedlist.mapper.MostWantedListScreenPresentationDestinationToNavigationCallbackMapper
 import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedlist.model.MostWantedListTopBarResourcesUiModel
 import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.mapper.MostWantedPersonPresentationToUiMapper
 import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.model.MostWantedPersonUiModel
-import com.psycodeinteractive.fbimostwanted.ui.observeWithLifecycle
+import com.psycodeinteractive.fbimostwanted.ui.screen.Screen
+import com.psycodeinteractive.fbimostwanted.ui.screen.ScreenNavigationContainer
+import com.psycodeinteractive.fbimostwanted.ui.screen.collectViewState
 import com.psycodeinteractive.fbimostwanted.ui.themeTypography
 import com.psycodeinteractive.fbimostwanted.ui.widget.FBIMostWantedLazyColumn
 import com.psycodeinteractive.fbimostwanted.ui.widget.topbar.TopBar
@@ -39,7 +39,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import me.tatarka.inject.annotations.Inject
 
 typealias MostWantedListScreen = @Composable (
-    goToPersonDetails: (personId: String) -> Unit
+    mostWantedListScreenCallbacks: MostWantedListScreenNavigationCallbacks
 ) -> Unit
 
 @Destination
@@ -48,19 +48,20 @@ typealias MostWantedListScreen = @Composable (
 fun MostWantedListScreen(
     provideMostWantedListViewModel: () -> MostWantedListViewModel,
     mostWantedPersonPresentationToUiMapper: MostWantedPersonPresentationToUiMapper,
-    goToPersonDetails: (personId: String) -> Unit
+    presentationDestinationToNavigationCallbackMapper: MostWantedListScreenPresentationDestinationToNavigationCallbackMapper,
+    screenNavigationCallbacks: MostWantedListScreenNavigationCallbacks
 ) {
-    Screen(provideMostWantedListViewModel) { viewModel, _ ->
+    Screen(
+        provideViewModel = provideMostWantedListViewModel,
+        screenNavigationContainer = ScreenNavigationContainer(
+            screenNavigationCallbacks,
+            presentationDestinationToNavigationCallbackMapper
+        )
+    ) { viewModel, _ ->
         val state by viewModel.collectViewState()
         val mostWantedPersonList = state.mostWantedPersonList.map(
             mostWantedPersonPresentationToUiMapper::toUi
         )
-        
-        viewModel.navigationCommands.observeWithLifecycle {
-            when (it) {
-                is MostWantedPersonPresentationDestination -> goToPersonDetails(it.personId)
-            }
-        }
 
         Column(
             modifier = Modifier.fillMaxSize()
@@ -79,16 +80,6 @@ fun MostWantedListScreen(
                     onClick = viewModel::onMostWantedPersonClick
                 )
             }
-            HandleEvents(viewModel)
-        }
-    }
-}
-
-@Composable
-private fun HandleEvents(viewModel: MostWantedListViewModel) {
-    viewModel.eventFlow.observeWithLifecycle { event ->
-        when (event) {
-            else -> {}
         }
     }
 }
@@ -120,7 +111,7 @@ private fun MostWantedPersonListItem(
             ) {
                 Text(
                     modifier = Modifier.align(Top),
-                    text = "Text", // person.timeStamp.formatDate(),
+                    text = person.modified,
                     color = Color.LightGray,
                     style = themeTypography.caption
                 )
@@ -134,7 +125,7 @@ private fun MostWantedPersonListItem(
                         .align(CenterVertically),
                     maxLines = 2,
                     overflow = Ellipsis,
-                    text = "Text", // person.text.orEmpty(),
+                    text = person.title,
                     style = themeTypography.body1
                 )
             }

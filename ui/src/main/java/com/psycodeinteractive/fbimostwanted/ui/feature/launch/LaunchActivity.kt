@@ -15,6 +15,8 @@ import com.psycodeinteractive.fbimostwanted.ui.feature.NavGraphs
 import com.psycodeinteractive.fbimostwanted.ui.feature.destinations.MostWantedListScreenDestination
 import com.psycodeinteractive.fbimostwanted.ui.feature.destinations.MostWantedPersonScreenDestination
 import com.psycodeinteractive.fbimostwanted.ui.feature.destinations.SplashScreenDestination
+import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedlist.MostWantedListScreenNavigationCallbacks
+import com.psycodeinteractive.fbimostwanted.ui.feature.splash.SplashScreenNavigationCallbacks
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.manualcomposablecalls.composable
 import me.tatarka.inject.annotations.Inject
@@ -57,18 +59,20 @@ fun AppEntryPoint(
         navGraph = NavGraphs.root
     ) {
         composable(SplashScreenDestination) {
-            screenComponent.splashScreen(
-                onSplashFinished = {
+            val screenNavigationCallbacks = SplashScreenNavigationCallbacks(
+                goToMostWantedList = {
                     destinationsNavigator.navigate(MostWantedListScreenDestination)
                 }
             )
+            screenComponent.splashScreen(screenNavigationCallbacks)
         }
         composable(MostWantedListScreenDestination) {
-            screenComponent.mostWantedListScreen(
+            val screenNavigationCallbacks = MostWantedListScreenNavigationCallbacks(
                 goToPersonDetails = { personId ->
                     destinationsNavigator.navigate(MostWantedPersonScreenDestination(personId = personId))
                 }
             )
+            screenComponent.mostWantedListScreen(screenNavigationCallbacks)
         }
         composable(MostWantedPersonScreenDestination) {
             screenComponent.mostWantedPersonScreen(

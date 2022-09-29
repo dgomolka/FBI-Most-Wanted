@@ -1,0 +1,3 @@
+package com.psycodeinteractive.fbimostwanted.ui.screen
+
+interface ScreenNavigationCallbacks

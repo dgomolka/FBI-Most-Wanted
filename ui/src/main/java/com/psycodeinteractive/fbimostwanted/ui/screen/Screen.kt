@@ -1,4 +1,4 @@
-package com.psycodeinteractive.fbimostwanted.ui
+package com.psycodeinteractive.fbimostwanted.ui.screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,6 +23,22 @@ import com.psycodeinteractive.fbimostwanted.presentation.Event
 import com.psycodeinteractive.fbimostwanted.presentation.ViewState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+
+@Composable
+inline fun <reified VM : BaseViewModel<out ViewState, out Event>, NavCallbacks : ScreenNavigationCallbacks> Screen(
+    crossinline provideViewModel: () -> VM,
+    screenNavigationContainer: ScreenNavigationContainer<NavCallbacks>? = null,
+    crossinline children: @Composable (viewModel: VM, lifecycleScope: LifecycleCoroutineScope) -> Unit
+) {
+    val viewModel: VM = viewModel { provideViewModel() }
+    children(viewModel, LocalLifecycleOwner.current.lifecycleScope)
+
+    viewModel.navigationCommands.observeWithLifecycle { destination ->
+        screenNavigationContainer?.run {
+            presentationDestinationToNavigationCallbackMapper.map(destination, screenNavigationCallbacks)
+        }
+    }
+}
 
 @Composable
 inline fun <reified VM : BaseViewModel<out ViewState, out Event>> Screen(

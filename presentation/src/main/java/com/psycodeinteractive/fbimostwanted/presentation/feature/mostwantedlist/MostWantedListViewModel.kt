@@ -35,7 +35,6 @@ class MostWantedListViewModel(
     private fun updateMostWantedPersonListState(mostWantedPersonDomainList: List<MostWantedPersonDomainModel>) {
         updateViewState {
             mostWantedPersonList = mostWantedPersonDomainList.map(mostWantedPersonDomainToPresentationMapper::toPresentation)
-            println("LOL presentation mostWantedPersonList size: ${mostWantedPersonList.size}")
         }
     }
 
