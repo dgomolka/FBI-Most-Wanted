@@ -23,7 +23,6 @@ import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.model.Im
 import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.model.MostWantedPersonUiModel
 import com.psycodeinteractive.fbimostwanted.ui.screen.OnLifecycle
 import com.psycodeinteractive.fbimostwanted.ui.screen.Screen
-import com.psycodeinteractive.fbimostwanted.ui.screen.ScreenNavigationCallbacks
 import com.psycodeinteractive.fbimostwanted.ui.screen.collectViewState
 import com.psycodeinteractive.fbimostwanted.ui.widget.image.HorizontalImageGallery
 import com.psycodeinteractive.fbimostwanted.ui.widget.topbar.TopBar

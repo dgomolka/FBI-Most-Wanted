@@ -32,14 +32,14 @@ typealias SplashScreen = @Composable (
 @Composable
 fun SplashScreen(
     provideSplashViewModel: () -> SplashViewModel,
-    splashScreenPresentationDestinationToNavigationCallbackMapper: SplashScreenPresentationDestinationToNavigationCallbackMapper,
+    presentationDestinationToNavigationCallbackMapper: SplashScreenPresentationDestinationToNavigationCallbackMapper,
     screenNavigationCallbacks: SplashScreenNavigationCallbacks
 ) {
     Screen(
         provideViewModel = provideSplashViewModel,
         screenNavigationContainer = ScreenNavigationContainer(
             screenNavigationCallbacks,
-            splashScreenPresentationDestinationToNavigationCallbackMapper
+            presentationDestinationToNavigationCallbackMapper
         )
     ) { viewModel, _ ->
         Splash()

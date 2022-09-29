@@ -27,7 +27,13 @@ kotlin {
         }
 
         commonTest.dependencies {
+            implementation kotlin("test")
+            implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinx_coroutines_version"
+            implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinx_coroutines_version"
             implementation "io.mockative:mockative:$mockative_version"
+        }
+        jvmTest.dependencies {
+            implementation "org.jetbrains.kotlin:kotlin-test-junit"
         }
     }
 
