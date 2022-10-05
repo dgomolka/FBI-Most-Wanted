@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle.State.CREATED
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.MostWantedPersonViewModel
 import com.psycodeinteractive.fbimostwanted.ui.R
-import com.psycodeinteractive.fbimostwanted.ui.extension.string
+import com.psycodeinteractive.fbimostwanted.ui.extension.value
 import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedlist.model.MostWantedListTopBarResourcesUiModel
 import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.mapper.MostWantedPersonPresentationToUiMapper
 import com.psycodeinteractive.fbimostwanted.ui.feature.mostwantedperson.model.ImageUiModel
@@ -78,7 +78,7 @@ private fun MostWantedPersonDetails(mostWantedPerson: MostWantedPersonUiModel?) 
                     urls = images.map(ImageUiModel::large)
                 )
             }
-            Text(text = "${R.string.sex.string} ${sex.stringResource.string}")
+            Text(text = "${R.string.sex.value} ${sex.stringResource.value}")
             if (subjects.isNotEmpty()) {
                 LazyRow {
                     items(subjects) { subject ->

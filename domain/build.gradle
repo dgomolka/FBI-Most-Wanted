@@ -32,9 +32,6 @@ kotlin {
             implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinx_coroutines_version"
             implementation "io.mockative:mockative:$mockative_version"
         }
-        jvmTest.dependencies {
-            implementation "org.jetbrains.kotlin:kotlin-test-junit"
-        }
     }
 
     targets.all {
@@ -45,6 +42,9 @@ kotlin {
         }
 
         compilations.configureEach {
+            if (it.name.startsWith("ksp") && it.name.contains("Test")) {
+                add(it.name, "io.mockative:mockative-processor:$mockative_version")
+            }
             kotlinSourceSets.forEach { sourceSet ->
                 sourceSet.kotlin.srcDir("build/generated/ksp/$targetName/${sourceSet.name}/kotlin")
             }
@@ -66,14 +66,6 @@ android {
     kotlinOptions {
         jvmTarget = compile_jvm_target
     }
-}
-
-dependencies {
-    configurations
-            .findAll { it.name.startsWith("ksp") && it.name.contains("Test") }
-            .forEach {
-                add(it.name, "io.mockative:mockative-processor:$mockative_version")
-            }
 }
 
 apply from: '../projectConfiguration.gradle'

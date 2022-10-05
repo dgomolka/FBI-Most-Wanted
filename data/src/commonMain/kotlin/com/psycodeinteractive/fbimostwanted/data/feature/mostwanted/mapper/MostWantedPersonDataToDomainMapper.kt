@@ -57,6 +57,6 @@ class MostWantedPersonDataToDomainMapper(
         modified = input.modified,
         subjects = input.subjects,
         ncic = input.ncic,
-        fieldOffices = input.fieldOffices,
+        fieldOffices = input.fieldOffices
     )
 }

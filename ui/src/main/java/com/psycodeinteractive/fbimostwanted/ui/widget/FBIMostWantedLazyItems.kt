@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.psycodeinteractive.fbimostwanted.ui.R
-import com.psycodeinteractive.fbimostwanted.ui.extension.string
+import com.psycodeinteractive.fbimostwanted.ui.extension.value
 import com.psycodeinteractive.fbimostwanted.ui.themeTypography
 import com.psycodeinteractive.fbimostwanted.ui.widget.LazyItemsArrangement.Horizontal
 import com.psycodeinteractive.fbimostwanted.ui.widget.LazyItemsArrangement.Vertical
@@ -119,7 +119,7 @@ private fun <Model> EmptyListIndicator(
         ) {
             Text(
                 modifier = Modifier.align(Center),
-                text = R.string.no_items.string,
+                text = R.string.no_items.value,
                 textAlign = TextAlign.Center,
                 style = themeTypography.h5
             )

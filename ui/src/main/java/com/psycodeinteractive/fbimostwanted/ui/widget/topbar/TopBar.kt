@@ -19,8 +19,8 @@ import androidx.compose.ui.Alignment.Companion.CenterEnd
 import androidx.compose.ui.Alignment.Companion.CenterStart
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.psycodeinteractive.fbimostwanted.ui.extension.value
 import com.psycodeinteractive.fbimostwanted.ui.semiBold
 import com.psycodeinteractive.fbimostwanted.ui.themeTypography
 import com.psycodeinteractive.fbimostwanted.ui.widget.topbar.model.BackNavigationTypeUiModel
@@ -40,8 +40,8 @@ fun TopBar(
             return
         }
 
-        val titleBigText = titleBigTextResource?.run { stringResource(this) }
-        val titleSmallText = titleSmallTextResource?.run { stringResource(this) }
+        val titleBigText = titleBigTextResource?.run { value }
+        val titleSmallText = titleSmallTextResource?.run { value }
 
         val isTitleBigProvided = titleBigText != null
 
@@ -105,7 +105,7 @@ private fun BoxScope.Action(
 ) {
     if (topBarAction == TopBarActionUiModel.None) return
 
-    val actionText = stringResource(topBarAction.textResource)
+    val actionText = topBarAction.textResource.value
     AnimatedVisibility(
         modifier = Modifier
             .wrapContentSize()

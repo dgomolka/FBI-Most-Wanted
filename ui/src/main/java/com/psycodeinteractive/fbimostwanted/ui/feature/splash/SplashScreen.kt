@@ -8,11 +8,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import com.psycodeinteractive.fbimostwanted.presentation.feature.splash.SplashEvent.StartSplash
 import com.psycodeinteractive.fbimostwanted.presentation.feature.splash.SplashViewModel
 import com.psycodeinteractive.fbimostwanted.ui.R
+import com.psycodeinteractive.fbimostwanted.ui.extension.value
 import com.psycodeinteractive.fbimostwanted.ui.feature.splash.mapper.SplashScreenPresentationDestinationToNavigationCallbackMapper
 import com.psycodeinteractive.fbimostwanted.ui.screen.Screen
 import com.psycodeinteractive.fbimostwanted.ui.screen.ScreenNavigationContainer
@@ -56,7 +56,7 @@ private fun Splash() {
     ) {
         Text(
             modifier = Modifier.wrapContentSize(),
-            text = stringResource(id = R.string.app_name),
+            text = R.string.app_name.value,
             fontSize = 32.sp,
             color = MaterialTheme.colors.primary
         )

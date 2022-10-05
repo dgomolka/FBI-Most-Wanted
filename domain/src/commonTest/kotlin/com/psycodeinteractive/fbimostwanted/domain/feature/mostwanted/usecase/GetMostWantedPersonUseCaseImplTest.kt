@@ -3,7 +3,7 @@ package com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.usecase
 import com.psycodeinteractive.fbimostwanted.domain.coroutine.fakeCoroutineContextProvider
 import com.psycodeinteractive.fbimostwanted.domain.coroutine.fakeCoroutineScope
 import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.CoroutineContextProvider
-import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.model.givenMostWantedList
+import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.model.givenMostWantedPerson1
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.repository.MostWantedRepository
 import io.mockative.Mock
 import io.mockative.Times
@@ -17,12 +17,12 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class GetMostWantedListUseCaseImplTest {
+class GetMostWantedPersonUseCaseImplTest {
 
     @Mock
     val mostWantedRepository = mock(classOf<MostWantedRepository>())
 
-    private lateinit var classUnderTest: GetMostWantedListUseCaseImpl
+    private lateinit var classUnderTest: GetMostWantedPersonUseCaseImpl
 
     private lateinit var coroutineContextProvider: CoroutineContextProvider
 
@@ -32,19 +32,21 @@ class GetMostWantedListUseCaseImplTest {
     fun setup() {
         coroutineContextProvider = fakeCoroutineContextProvider
         coroutineScope = fakeCoroutineScope
-        classUnderTest = GetMostWantedListUseCaseImpl(mostWantedRepository, coroutineContextProvider)
+        classUnderTest = GetMostWantedPersonUseCaseImpl(mostWantedRepository, coroutineContextProvider)
     }
 
     @Test
-    fun `When executeInBackground Then verify most wanted list was requested and returned`() = runBlocking {
+    fun `Given person id When executeInBackground Then verify most wanted person was requested and returned`() = runBlocking {
         // Given
-        given(mostWantedRepository).coroutine { getMostWantedList() }.thenReturn(givenMostWantedList)
+        val givenMostWantedPerson = givenMostWantedPerson1
+        val givenId = givenMostWantedPerson.id
+        given(mostWantedRepository).coroutine { getMostWantedPerson(givenId) }.thenReturn(givenMostWantedPerson)
 
         // When
-        val actualResult = classUnderTest.executeInBackground(Unit, coroutineScope)
+        val actualResult = classUnderTest.executeInBackground(givenId, coroutineScope)
 
         // Then
-        verify(mostWantedRepository).coroutine { getMostWantedList() }.wasInvoked(Times(1))
-        assertEquals(givenMostWantedList, actualResult)
+        verify(mostWantedRepository).coroutine { getMostWantedPerson(givenId) }.wasInvoked(Times(1))
+        assertEquals(givenMostWantedPerson, actualResult)
     }
 }
