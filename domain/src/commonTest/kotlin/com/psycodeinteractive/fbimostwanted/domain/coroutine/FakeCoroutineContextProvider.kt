@@ -1,6 +1,5 @@
 package com.psycodeinteractive.fbimostwanted.domain.coroutine
 
-import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.CoroutineContextProvider
 import kotlin.coroutines.CoroutineContext
 
 private class FakeCoroutineContextProvider(

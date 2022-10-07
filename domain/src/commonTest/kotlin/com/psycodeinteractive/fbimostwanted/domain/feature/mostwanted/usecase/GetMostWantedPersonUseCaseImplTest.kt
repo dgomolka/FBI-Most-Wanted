@@ -1,8 +1,8 @@
 package com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.usecase
 
+import com.psycodeinteractive.fbimostwanted.domain.coroutine.CoroutineContextProvider
 import com.psycodeinteractive.fbimostwanted.domain.coroutine.fakeCoroutineContextProvider
 import com.psycodeinteractive.fbimostwanted.domain.coroutine.fakeCoroutineScope
-import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.CoroutineContextProvider
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.model.givenMostWantedPerson1
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.repository.MostWantedRepository
 import io.mockative.Mock

@@ -20,7 +20,7 @@ class MostWantedDataSource(
     private val cache: MostWantedPersonCache
 ) : DataSource<List<MostWantedPersonDataModel>> {
     override suspend fun initialize() {
-        cache.emitOnEmpty {
+        cache.emitIfEmpty {
             println("LOL fetchLocal")
             fetchLocal()
         }
@@ -30,7 +30,7 @@ class MostWantedDataSource(
         cache.emit { fetchRemote() }
     }
 
-    override suspend fun get() = cache.emitOnEmpty {
+    override suspend fun get() = cache.emitIfEmpty {
         println("LOL fetchRemote onEmpty")
         fetchRemote()
     }.flow

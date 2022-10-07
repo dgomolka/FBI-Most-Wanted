@@ -24,8 +24,8 @@ buildCache {
 }
 
 rootProject.name = "FBI Most Wanted"
-include ':androidApp'
-include ':ui'
+include ':app-android'
+include ':ui-android'
 include ':data'
 include ':domain'
 include ':presentation'

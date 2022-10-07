@@ -1,11 +1,69 @@
 plugins {
+    id "org.jetbrains.kotlin.multiplatform"
     id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
     id "com.google.devtools.ksp"
+}
+
+configurations {
+    compileClasspath
+}
+
+kotlin {
+    android {
+
+    }
+    ios {
+        binaries {
+            framework {
+                baseName = "presentation"
+            }
+        }
+    }
+
+    sourceSets {
+        commonMain.dependencies {
+            api project(":domain")
+
+            implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinx_coroutines_version"
+            implementation "me.tatarka.inject:kotlin-inject-runtime:$kotlin_inject_version"
+        }
+
+        androidMain.dependencies {
+            implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+        }
+
+        iosMain.dependencies {
+
+        }
+
+        commonTest.dependencies {
+            implementation kotlin("test")
+            implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinx_coroutines_version"
+            implementation "io.mockative:mockative:$mockative_version"
+        }
+    }
+
+    targets.all {
+        if(it.targetName != "metadata") {
+            dependencies {
+                add("ksp${targetName.capitalize()}", "me.tatarka.inject:kotlin-inject-compiler-ksp:$kotlin_inject_version")
+            }
+        }
+
+        compilations.configureEach {
+            if (it.name.startsWith("ksp") && it.name.contains("Test")) {
+                add(it.name, "io.mockative:mockative-processor:$mockative_version")
+            }
+            kotlinSourceSets.forEach { sourceSet ->
+                sourceSet.kotlin.srcDir("build/generated/ksp/$targetName/${sourceSet.name}/kotlin")
+            }
+        }
+    }
 }
 
 android {
     compileSdkVersion compile_sdk_version
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdkVersion min_sdk_version
         targetSdkVersion target_sdk_version
@@ -17,25 +75,6 @@ android {
     kotlinOptions {
         jvmTarget = compile_jvm_target
     }
-    sourceSets {
-        // allows android studio to see ksp generated code
-        debug.java {
-            srcDir("build/generated/ksp/debug/kotlin")
-        }
-        release.java {
-            srcDir("build/generated/ksp/release/kotlin")
-        }
-        testDebug.java {
-            srcDir("build/generated/ksp/debugUnitTest/kotlin")
-        }
-        androidTestDebug.java {
-            srcDir("build/generated/ksp/debugAndroidTest/kotlin")
-        }
-        // share code between unit and android tests
-        test.java {
-            srcDir("src/commonTest/java")
-        }
-    }
 }
 
 ksp {
@@ -43,13 +82,4 @@ ksp {
     arg("me.tatarka.inject.enableJavaxAnnotations", "true")
 }
 
-dependencies {
-    api project(":domain")
-
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
-    implementation "javax.inject:javax.inject:$javax_inject_version"
-    ksp("me.tatarka.inject:kotlin-inject-compiler-ksp:$kotlin_inject_version")
-    implementation("me.tatarka.inject:kotlin-inject-runtime:$kotlin_inject_version")
-}
+apply from: '../projectConfiguration.gradle'

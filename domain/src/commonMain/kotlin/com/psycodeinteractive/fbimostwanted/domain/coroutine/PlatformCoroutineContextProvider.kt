@@ -1,0 +1,3 @@
+package com.psycodeinteractive.fbimostwanted.domain.coroutine
+
+expect object PlatformCoroutineContextProvider : CoroutineContextProvider

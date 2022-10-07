@@ -12,13 +12,13 @@ class Cache<State> {
     val flow: Flow<State> get() = sharedFlow
     private val mutex = Mutex()
 
-    suspend fun emitOnEmpty(onEmpty: suspend () -> State): Cache<State> {
+    suspend fun emitIfEmpty(ifEmpty: suspend () -> State): Cache<State> {
         with(sharedFlow) {
             if (replayCache.isNotEmpty()) return this@Cache
             mutex.withLock {
-                val newOnEmpty = onEmpty()
-                if (newOnEmpty is Collection<*> && newOnEmpty.isEmpty()) return@withLock
-                emit(onEmpty())
+                val newIfEmpty = ifEmpty()
+                if (newIfEmpty is Collection<*> && newIfEmpty.isEmpty()) return@withLock
+                emit(ifEmpty())
             }
         }
         return this

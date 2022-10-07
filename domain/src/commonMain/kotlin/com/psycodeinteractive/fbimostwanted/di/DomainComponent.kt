@@ -1,7 +1,7 @@
 package com.psycodeinteractive.fbimostwanted.di
 
-import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.CoroutineContextProvider
-import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.PlatformCoroutineContextProvider
+import com.psycodeinteractive.fbimostwanted.domain.coroutine.CoroutineContextProvider
+import com.psycodeinteractive.fbimostwanted.domain.coroutine.PlatformCoroutineContextProvider
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.repository.MostWantedRepository
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.usecase.GetMostWantedListUseCase
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.usecase.GetMostWantedListUseCaseImpl
