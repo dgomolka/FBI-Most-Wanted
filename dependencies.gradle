@@ -1,23 +1,24 @@
 ext {
     android_gradle_version = '7.1.3'
-    kotlin_version = '1.7.10'
+    kotlin_version = '1.7.20'
     android_plugin_version = "7.3.0"
-    ksp_version = "1.7.10-1.0.6"
+    ksp_version = "1.7.20-1.0.7"
     kotlinx_serialization_version = "1.4.0"
     sql_delight_version = "2.0.0-SNAPSHOT"
     kotlinx_coroutines_version = "1.6.3-native-mt"
-    ktor_version = "2.1.1"
+    ktor_version = "2.1.2"
     jetbrains_annotations_version = '18.0.0'
-    compose_kotlin_compiler_extension_version = "1.3.1"
+    compose_kotlin_compiler_extension_version = "1.3.2"
     compose_version = "1.3.0-beta02"
     compose_destinations_version = "1.7.21-beta"
     lifecycle_viewmodel_compose_version = "2.5.1"
-    activity_compose_version = "1.6.0-rc02"
+    activity_compose_version = "1.6.0"
     mockative_version = "1.2.6"
     javax_inject_version = "1"
     androidx_multidex_version = "2.0.1"
     kotlin_inject_version = "0.5.2-SNAPSHOT"
     landscapist_version = "2.0.0"
+    kotest_version = "5.5.0"
 }
 
 static def addRepos(RepositoryHandler handler) {

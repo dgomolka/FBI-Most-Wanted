@@ -9,7 +9,7 @@ import androidx.lifecycle.Lifecycle.Event.ON_START
 import androidx.lifecycle.Lifecycle.Event.ON_STOP
 import androidx.lifecycle.LifecycleEventObserver
 import com.psycodeinteractive.fbimostwanted.di.ScreenComponent
-import com.psycodeinteractive.fbimostwanted.presentation.feature.launch.MainViewModel
+import com.psycodeinteractive.fbimostwanted.presentation.feature.launch.LaunchViewModel
 import com.psycodeinteractive.fbimostwanted.ui.Theme
 import com.psycodeinteractive.fbimostwanted.ui.feature.NavGraphs
 import com.psycodeinteractive.fbimostwanted.ui.feature.destinations.MostWantedListScreenDestination
@@ -39,10 +39,10 @@ typealias AppEntryPoint = @Composable (ScreenComponent) -> Unit
 @Inject
 @Composable
 fun AppEntryPoint(
-    providesMainViewModel: () -> MainViewModel,
+    providesLaunchViewModel: () -> LaunchViewModel,
     screenComponent: ScreenComponent
 ) {
-    val viewModel = providesMainViewModel()
+    val viewModel = providesLaunchViewModel()
     LocalLifecycleOwner.current.run {
         DisposableEffect(this) {
             val observer = viewModel.lifecycleEventObserver
@@ -82,7 +82,7 @@ fun AppEntryPoint(
     }
 }
 
-private val MainViewModel.lifecycleEventObserver
+private val LaunchViewModel.lifecycleEventObserver
     get() = LifecycleEventObserver { _, event ->
         if (event == ON_START) {
             onStart()

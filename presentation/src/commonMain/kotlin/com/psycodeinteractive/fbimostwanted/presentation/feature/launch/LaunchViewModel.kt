@@ -8,7 +8,7 @@ import com.psycodeinteractive.fbimostwanted.presentation.mapper.DefaultDomainToP
 import me.tatarka.inject.annotations.Inject
 
 @Inject
-class MainViewModel(
+class LaunchViewModel(
     private val startSessionUseCase: StartSessionUseCase,
     private val stopSessionUseCase: StopSessionUseCase,
     useCaseExecutorProvider: UseCaseExecutorProvider,

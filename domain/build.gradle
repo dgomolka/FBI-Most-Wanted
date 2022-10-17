@@ -43,11 +43,19 @@ kotlin {
 
         compilations.configureEach {
             if (it.name.startsWith("ksp") && it.name.contains("Test")) {
-                add(it.name, "io.mockative:mockative-processor:$mockative_version")
+                dependencies.add(it.name, "io.mockative:mockative-processor:$mockative_version")
             }
             kotlinSourceSets.forEach { sourceSet ->
                 sourceSet.kotlin.srcDir("build/generated/ksp/$targetName/${sourceSet.name}/kotlin")
             }
+        }
+    }
+}
+
+dependencies {
+    configurations.configureEach {
+        if (it.name.startsWith("ksp") && it.name.contains("Test")) {
+            add(it.name, "io.mockative:mockative-processor:$mockative_version")
         }
     }
 }

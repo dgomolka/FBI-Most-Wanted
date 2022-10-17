@@ -61,6 +61,14 @@ kotlin {
     }
 }
 
+dependencies {
+    configurations.configureEach {
+        if (it.name.startsWith("ksp") && it.name.contains("Test")) {
+            add(it.name, "io.mockative:mockative-processor:$mockative_version")
+        }
+    }
+}
+
 android {
     compileSdkVersion compile_sdk_version
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")

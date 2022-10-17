@@ -1,0 +1,105 @@
+version: 2.1
+parameters:
+  environment:
+    type: string
+    default: "Production"
+  build-all:
+    type: boolean
+    default: false
+  build-android:
+    type: boolean
+    default: false
+  build-ios:
+    type: boolean
+    default: false
+
+orbs:
+  android: circleci/android@2.1.2
+
+android-build-environment: &android-build-environment
+  executor:
+    name: android/android-machine
+    resource-class: xlarge
+    tag: latest
+
+require-android-checkout: &require-android-checkout
+  requires:
+    - build-android
+
+require-android-checkout-hold: &require-build-android-hold
+  requires:
+    - hold
+    - build-android
+
+pr_check_filter: &pr_check_filter
+  branches:
+    only:
+      - /pr\/.*/
+
+main_check_filter: &main_check_filter
+  branches:
+    only:
+      - main
+
+set_environment_vars: &set_environment_vars
+  run:
+    name: Custom environment variables
+    command: echo 'export BUILD_NUMBER=$CIRCLE_BUILD_NUM' >> $BASH_ENV
+
+create_commit_message: &create_commit_message
+  run:
+    name: Create commit message
+    command: source .circleci/circle_env.sh && createCommitMessage
+
+jobs:
+  build-android:
+    <<: *android-build-environment
+
+    steps:
+      - checkout
+      - android/restore-build-cache
+      - android/restore-gradle-cache
+      - run:
+          name: Run Android tests
+          command: ./gradlew androidApp:testDebugUnitTest
+      - android/save-gradle-cache
+      - android/save-build-cache
+
+  build-ios:
+    macos:
+      xcode: 14.0.1
+    steps:
+      - checkout
+      - run:
+          name: Allow proper XCode dependency resolution
+          command: |
+            sudo defaults write com.apple.dt.Xcode IDEPackageSupportUseBuiltinSCM YES
+            rm ~/.ssh/id_rsa || true
+            for ip in $(dig @8.8.8.8 bitbucket.org +short); do ssh-keyscan bitbucket.org,$ip; ssh-keyscan $ip; done 2>/dev/null >> ~/.ssh/known_hosts || true
+            for ip in $(dig @8.8.8.8 github.com +short); do ssh-keyscan github.com,$ip; ssh-keyscan $ip; done 2>/dev/null >> ~/.ssh/known_hosts || true
+      - run:
+          name: Install Gem dependencies
+          command: |
+            cd iosApp
+            bundle install
+      - run:
+          name: Fastlane Tests
+          command: |
+            cd iosApp
+            fastlane scan
+workflows:
+  run-android:
+    when:
+      or:
+        - << pipeline.parameters.build-android >>
+        - << pipeline.parameters.build-all >>
+    jobs:
+      - build-android
+
+  run-ios:
+    when:
+      or:
+        - << pipeline.parameters.build-ios >>
+        - << pipeline.parameters.build-all >>
+    jobs:
+      - build-ios
