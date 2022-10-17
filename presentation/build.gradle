@@ -41,6 +41,12 @@ kotlin {
             implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinx_coroutines_version"
             implementation "io.mockative:mockative:$mockative_version"
         }
+
+        all {
+            languageSettings {
+                optIn('kotlinx.coroutines.ExperimentalCoroutinesApi')
+            }
+        }
     }
 
     targets.all {
@@ -52,7 +58,7 @@ kotlin {
 
         compilations.configureEach {
             if (it.name.startsWith("ksp") && it.name.contains("Test")) {
-                add(it.name, "io.mockative:mockative-processor:$mockative_version")
+                dependencies.add(it.name, "io.mockative:mockative-processor:$mockative_version")
             }
             kotlinSourceSets.forEach { sourceSet ->
                 sourceSet.kotlin.srcDir("build/generated/ksp/$targetName/${sourceSet.name}/kotlin")

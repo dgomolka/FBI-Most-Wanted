@@ -6,8 +6,10 @@ import com.psycodeinteractive.fbimostwanted.presentation.contract.mapper.DomainT
 import com.psycodeinteractive.fbimostwanted.presentation.model.exception.PresentationException
 import com.psycodeinteractive.fbimostwanted.presentation.model.exception.UnknownPresentationException
 
-class DefaultDomainToPresentationExceptionMapper :
-    DomainToPresentationMapper<DomainException, PresentationException>() {
+interface DefaultDomainToPresentationExceptionMapper :
+    DomainToPresentationMapper<DomainException, PresentationException>
+
+class DefaultDomainToPresentationExceptionMapperImpl : DefaultDomainToPresentationExceptionMapper {
     override fun map(input: DomainException) = when (input) {
         is UnknownDomainException -> UnknownPresentationException(input)
         else -> UnknownPresentationException(input)

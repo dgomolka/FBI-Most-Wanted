@@ -9,14 +9,12 @@ import io.mockative.given
 import io.mockative.mock
 import io.mockative.once
 import io.mockative.verify
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@ExperimentalCoroutinesApi
 class UseCaseExecutorTest {
 
     @Mock
@@ -28,11 +26,11 @@ class UseCaseExecutorTest {
     @Mock
     val testUseCase = mock(TestUseCase::class)
 
-    private lateinit var classUnderTest: UseCaseExecutor
+    private lateinit var classUnderTest: UseCaseExecutorImpl
 
     @BeforeTest
     fun setup() {
-        classUnderTest = UseCaseExecutor(testCoroutineScope, logger)
+        classUnderTest = UseCaseExecutorImpl(testCoroutineScope, logger)
     }
 
     @Test
@@ -74,4 +72,3 @@ class UseCaseExecutorTest {
     interface MockCallback : (String) -> Unit
     interface TestUseCase : BaseUseCase<Unit, String>
 }
-

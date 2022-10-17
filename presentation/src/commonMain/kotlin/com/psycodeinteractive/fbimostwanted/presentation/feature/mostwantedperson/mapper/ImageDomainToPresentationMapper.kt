@@ -4,7 +4,9 @@ import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.model.Imag
 import com.psycodeinteractive.fbimostwanted.presentation.contract.mapper.DomainToPresentationMapper
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.model.ImagePresentationModel
 
-class ImageDomainToPresentationMapper : DomainToPresentationMapper<ImageDomainModel, ImagePresentationModel>() {
+interface ImageDomainToPresentationMapper : DomainToPresentationMapper<ImageDomainModel, ImagePresentationModel>
+
+class ImageDomainToPresentationMapperImpl : ImageDomainToPresentationMapper {
     override fun map(input: ImageDomainModel) = ImagePresentationModel(
         original = input.original,
         thumb = input.thumb,

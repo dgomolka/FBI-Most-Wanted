@@ -1,5 +1,6 @@
 package com.psycodeinteractive.fbimostwanted.presentation.feature.splash
 
+import com.psycodeinteractive.fbimostwanted.domain.logger.Logger
 import com.psycodeinteractive.fbimostwanted.presentation.BaseViewModel
 import com.psycodeinteractive.fbimostwanted.presentation.execution.UseCaseExecutorProvider
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedlist.MostWantedListPresentationDestination
@@ -10,15 +11,17 @@ import me.tatarka.inject.annotations.Inject
 @Inject
 class SplashViewModel(
     useCaseExecutorProvider: UseCaseExecutorProvider,
-    defaultDomainToPresentationExceptionMapper: DefaultDomainToPresentationExceptionMapper
+    defaultDomainToPresentationExceptionMapper: DefaultDomainToPresentationExceptionMapper,
+    logger: Logger
 ) : BaseViewModel<SplashViewState, SplashEvent>(
     useCaseExecutorProvider,
-    defaultDomainToPresentationExceptionMapper
+    defaultDomainToPresentationExceptionMapper,
+    logger
 ) {
 
     override val initialViewState = SplashViewState
 
-    init {
+    fun onViewCreated() {
         StartSplash.dispatchEvent()
     }
 

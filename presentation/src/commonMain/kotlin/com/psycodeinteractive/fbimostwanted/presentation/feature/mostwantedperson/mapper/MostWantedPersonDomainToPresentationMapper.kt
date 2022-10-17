@@ -4,12 +4,14 @@ import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.model.Most
 import com.psycodeinteractive.fbimostwanted.presentation.contract.mapper.DomainToPresentationMapper
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.model.MostWantedPersonPresentationModel
 
-class MostWantedPersonDomainToPresentationMapper(
+interface MostWantedPersonDomainToPresentationMapper : DomainToPresentationMapper<MostWantedPersonDomainModel, MostWantedPersonPresentationModel>
+
+class MostWantedPersonDomainToPresentationMapperImpl(
     private val sexDomainToPresentationMapper: SexDomainToPresentationMapper,
     private val fileDomainToPresentationMapper: FileDomainToPresentationMapper,
     private val imageDomainToPresentationMapper: ImageDomainToPresentationMapper,
     private val statusDomainToPresentationMapper: StatusDomainToPresentationMapper
-) : DomainToPresentationMapper<MostWantedPersonDomainModel, MostWantedPersonPresentationModel>() {
+) : MostWantedPersonDomainToPresentationMapper {
     override fun map(input: MostWantedPersonDomainModel) = MostWantedPersonPresentationModel(
         uid = input.uid,
         id = input.id,

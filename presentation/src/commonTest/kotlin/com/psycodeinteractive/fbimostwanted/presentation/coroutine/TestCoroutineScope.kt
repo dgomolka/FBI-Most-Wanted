@@ -1,4 +1,4 @@
-package com.psycodeinteractive.fbimostwanted.domain.coroutine
+package com.psycodeinteractive.fbimostwanted.presentation.coroutine
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher

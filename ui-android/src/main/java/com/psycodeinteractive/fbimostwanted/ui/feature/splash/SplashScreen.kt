@@ -9,11 +9,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
 import com.psycodeinteractive.fbimostwanted.presentation.feature.splash.SplashEvent.StartSplash
 import com.psycodeinteractive.fbimostwanted.presentation.feature.splash.SplashViewModel
 import com.psycodeinteractive.fbimostwanted.ui.R
 import com.psycodeinteractive.fbimostwanted.ui.extension.value
 import com.psycodeinteractive.fbimostwanted.ui.feature.splash.mapper.SplashScreenPresentationDestinationToNavigationCallbackMapper
+import com.psycodeinteractive.fbimostwanted.ui.screen.OnLifecycle
 import com.psycodeinteractive.fbimostwanted.ui.screen.Screen
 import com.psycodeinteractive.fbimostwanted.ui.screen.ScreenNavigationContainer
 import com.psycodeinteractive.fbimostwanted.ui.screen.observeWithLifecycle
@@ -42,6 +44,9 @@ fun SplashScreen(
             presentationDestinationToNavigationCallbackMapper
         )
     ) { viewModel, _ ->
+        OnLifecycle(minActiveState = Lifecycle.State.CREATED) {
+            viewModel.onViewCreated()
+        }
         Splash()
         HandleEvents(viewModel)
     }

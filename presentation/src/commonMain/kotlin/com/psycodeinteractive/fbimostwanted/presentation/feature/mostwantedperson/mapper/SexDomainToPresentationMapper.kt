@@ -7,7 +7,9 @@ import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.model.SexD
 import com.psycodeinteractive.fbimostwanted.presentation.contract.mapper.DomainToPresentationMapper
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.model.SexPresentationModel
 
-class SexDomainToPresentationMapper : DomainToPresentationMapper<SexDomainModel, SexPresentationModel>() {
+interface SexDomainToPresentationMapper : DomainToPresentationMapper<SexDomainModel, SexPresentationModel>
+
+class SexDomainToPresentationMapperImpl : SexDomainToPresentationMapper {
     override fun map(input: SexDomainModel) = when (input) {
         Female -> SexPresentationModel.Female
         Male -> SexPresentationModel.Male

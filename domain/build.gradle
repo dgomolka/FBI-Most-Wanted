@@ -32,6 +32,12 @@ kotlin {
             implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinx_coroutines_version"
             implementation "io.mockative:mockative:$mockative_version"
         }
+
+        all {
+            languageSettings {
+                optIn('kotlinx.coroutines.ExperimentalCoroutinesApi')
+            }
+        }
     }
 
     targets.all {

@@ -1,6 +1,6 @@
 package com.psycodeinteractive.fbimostwanted.domain.extension
 
-import com.psycodeinteractive.fbimostwanted.domain.execution.UseCaseExecutor
+import com.psycodeinteractive.fbimostwanted.domain.execution.UseCaseExecutorImpl
 import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.BaseUseCase
 import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.RunningExecution
 import io.mockative.Mock
@@ -11,10 +11,13 @@ import kotlin.test.assertEquals
 
 interface MockCallback : (Any) -> Unit
 
-@Mock val mockRunningExecution = mock(RunningExecution::class)
-@Mock val mockCallback = mock(MockCallback::class)
+@Mock
+val mockRunningExecution = mock(RunningExecution::class)
 
-inline fun <reified Result : Any> UseCaseExecutor.givenSuccessfulNoArgumentUseCaseExecution(
+@Mock
+val mockCallback = mock(MockCallback::class)
+
+inline fun <reified Result : Any> UseCaseExecutorImpl.givenSuccessfulNoArgumentUseCaseExecution(
     useCase: BaseUseCase<Unit, Result>,
     result: Result
 ) {

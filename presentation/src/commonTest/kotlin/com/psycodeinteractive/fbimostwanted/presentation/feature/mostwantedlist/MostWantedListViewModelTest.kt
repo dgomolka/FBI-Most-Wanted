@@ -1,13 +1,13 @@
 package com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedlist
 
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.usecase.GetMostWantedListUseCase
+import com.psycodeinteractive.fbimostwanted.domain.logger.Logger
 import com.psycodeinteractive.fbimostwanted.presentation.execution.UseCaseExecutorProvider
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.mapper.MostWantedPersonDomainToPresentationMapper
 import com.psycodeinteractive.fbimostwanted.presentation.mapper.DefaultDomainToPresentationExceptionMapper
 import io.mockative.Mock
 import io.mockative.mock
 import kotlin.test.BeforeTest
-import kotlin.test.Test
 
 class MostWantedListViewModelTest {
 
@@ -23,6 +23,9 @@ class MostWantedListViewModelTest {
     @Mock
     val defaultDomainToPresentationExceptionMapper = mock(DefaultDomainToPresentationExceptionMapper::class)
 
+    @Mock
+    val logger = mock(Logger::class)
+
     private lateinit var classUnderTest: MostWantedListViewModel
 
     @BeforeTest
@@ -31,16 +34,8 @@ class MostWantedListViewModelTest {
             mostWantedPersonDomainToPresentationMapper = mostWantedPersonDomainToPresentationMapper,
             getMostWantedListUseCase = getMostWantedListUseCase,
             useCaseExecutorProvider = useCaseExecutorProvider,
-            defaultDomainToPresentationExceptionMapper = defaultDomainToPresentationExceptionMapper
+            defaultDomainToPresentationExceptionMapper = defaultDomainToPresentationExceptionMapper,
+            logger = logger
         )
-    }
-
-    @Test
-    fun `test`() {
-        // Given
-
-        // When
-
-        // Then
     }
 }

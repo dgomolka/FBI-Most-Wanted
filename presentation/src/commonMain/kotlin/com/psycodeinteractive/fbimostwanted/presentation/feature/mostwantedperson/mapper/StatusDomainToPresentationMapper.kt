@@ -7,7 +7,9 @@ import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.model.Stat
 import com.psycodeinteractive.fbimostwanted.presentation.contract.mapper.DomainToPresentationMapper
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.model.StatusPresentationModel
 
-class StatusDomainToPresentationMapper : DomainToPresentationMapper<StatusDomainModel, StatusPresentationModel>() {
+interface StatusDomainToPresentationMapper : DomainToPresentationMapper<StatusDomainModel, StatusPresentationModel>
+
+class StatusDomainToPresentationMapperImpl : StatusDomainToPresentationMapper {
     override fun map(input: StatusDomainModel) = when (input) {
         Captured -> StatusPresentationModel.Captured
         NotAvailable -> StatusPresentationModel.NotAvailable

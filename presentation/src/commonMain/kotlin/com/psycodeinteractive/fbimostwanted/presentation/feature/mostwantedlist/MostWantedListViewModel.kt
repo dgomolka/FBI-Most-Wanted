@@ -2,6 +2,7 @@ package com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedlist
 
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.model.MostWantedPersonDomainModel
 import com.psycodeinteractive.fbimostwanted.domain.feature.mostwanted.usecase.GetMostWantedListUseCase
+import com.psycodeinteractive.fbimostwanted.domain.logger.Logger
 import com.psycodeinteractive.fbimostwanted.presentation.BaseViewModel
 import com.psycodeinteractive.fbimostwanted.presentation.execution.UseCaseExecutorProvider
 import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedperson.MostWantedPersonPresentationDestination
@@ -14,10 +15,12 @@ class MostWantedListViewModel(
     private val mostWantedPersonDomainToPresentationMapper: MostWantedPersonDomainToPresentationMapper,
     private val getMostWantedListUseCase: GetMostWantedListUseCase,
     useCaseExecutorProvider: UseCaseExecutorProvider,
-    defaultDomainToPresentationExceptionMapper: DefaultDomainToPresentationExceptionMapper
+    defaultDomainToPresentationExceptionMapper: DefaultDomainToPresentationExceptionMapper,
+    logger: Logger
 ) : BaseViewModel<MostWantedListViewState, MostWantedListEvent>(
     useCaseExecutorProvider,
-    defaultDomainToPresentationExceptionMapper
+    defaultDomainToPresentationExceptionMapper,
+    logger
 ) {
 
     override val initialViewState = MostWantedListViewState()

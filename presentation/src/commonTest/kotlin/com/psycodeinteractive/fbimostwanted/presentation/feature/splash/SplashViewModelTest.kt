@@ -1,58 +1,68 @@
 package com.psycodeinteractive.fbimostwanted.presentation.feature.splash
 
 import com.psycodeinteractive.fbimostwanted.domain.execution.UseCaseExecutor
-import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.BackgroundExecutionUseCase
-import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.RunningExecution
-import com.psycodeinteractive.fbimostwanted.presentation.TestBaseViewModel
-import com.psycodeinteractive.fbimostwanted.presentation.execution.TestBackgroundUseCase
+import com.psycodeinteractive.fbimostwanted.domain.logger.Logger
+import com.psycodeinteractive.fbimostwanted.presentation.coroutine.testCoroutineScope
+import com.psycodeinteractive.fbimostwanted.presentation.execution.UseCaseExecutorProvider
+import com.psycodeinteractive.fbimostwanted.presentation.feature.mostwantedlist.MostWantedListPresentationDestination
 import com.psycodeinteractive.fbimostwanted.presentation.mapper.DefaultDomainToPresentationExceptionMapper
 import io.mockative.Mock
-import io.mockative.any
-import io.mockative.classOf
-import io.mockative.given
 import io.mockative.mock
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class SplashViewModelTest {
 
     @Mock
-    val defaultDomainToPresentationExceptionMapper = mock(classOf<DefaultDomainToPresentationExceptionMapper>())
-//
-//    @Mock
-//    val testBackgroundExecutionUseCase = mock(classOf<TestBackgroundUseCase>())
-//
-//    @Mock
-//    val useCaseExecutor = mock(classOf<UseCaseExecutor>())
-//
-//    private lateinit var classUnderTest: SplashViewModel
-//
-//    @BeforeTest
-//    fun setup() {
-//        classUnderTest = SplashViewModel(
-//            useCaseExecutorProvider = useCaseExecutor,
-//            defaultDomainToPresentationExceptionMapper = defaultDomainToPresentationExceptionMapper
-//        )
-//    }
-//
-//    @Test
-//    fun `Given successful use case execution invoke Unit`() {
-//        runBlocking {
-//            // Given
-//            given(testBackgroundExecutionUseCase)
-//                .function(testBackgroundExecutionUseCase)
-//                .whenInvokedWith(any<BackgroundExecutionUseCase<Any, Any>>(), any<Any>(), any<Any>(), any<Any>())
-//                .thenReturn()
-//
-//            // When
-//            val actualResult = testBackgroundExecutionUseCase.
-//
-//                // Then
-//            verify(classUnderTest)
-//                .invocation {
-//                    any<BackgroundExecutionUseCase<Any, Any>>().
-//                }
-//        }
-//    }
+    val useCaseExecutor = mock(UseCaseExecutor::class)
+
+    @Mock
+    val defaultDomainToPresentationExceptionMapper = mock(DefaultDomainToPresentationExceptionMapper::class)
+
+    @Mock
+    val logger = mock(Logger::class)
+
+    private lateinit var classUnderTest: SplashViewModel
+
+    @BeforeTest
+    fun setup() {
+        val useCaseExecutorProvider = object : UseCaseExecutorProvider {
+            override fun invoke(coroutineScope: CoroutineScope) = useCaseExecutor
+        }
+        classUnderTest = SplashViewModel(
+            useCaseExecutorProvider = useCaseExecutorProvider,
+            defaultDomainToPresentationExceptionMapper = defaultDomainToPresentationExceptionMapper,
+            logger = logger
+        )
+    }
+
+    @Test
+    fun `When onViewCreated then verify StartSplash event was sent`() = testCoroutineScope.runTest {
+        // Given
+        val expectedEvent = SplashEvent.StartSplash
+
+        // When
+        classUnderTest.onViewCreated()
+
+        // Then
+        val actualEvent = classUnderTest.eventFlow.first()
+        assertEquals(expectedEvent, actualEvent)
+    }
+
+    @Test
+    fun `When onSplashFinished then verify MostWantedList navigation command was sent`() = testCoroutineScope.runTest {
+        // Given
+        val expectedNavigationCommand = MostWantedListPresentationDestination
+
+        // When
+        classUnderTest.onSplashFinished()
+
+        // Then
+        val actualNavigationCommand = classUnderTest.navigationCommands.first()
+        assertEquals(expectedNavigationCommand, actualNavigationCommand)
+    }
 }

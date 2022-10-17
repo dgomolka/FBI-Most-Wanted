@@ -1,6 +1,5 @@
 package com.psycodeinteractive.fbimostwanted.data.cache
 
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.first
@@ -33,7 +32,6 @@ class Cache<State> {
         }
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     suspend fun clear() {
         mutex.withLock {
             sharedFlow.resetReplayCache()

@@ -2,22 +2,24 @@ package com.psycodeinteractive.fbimostwanted.presentation
 
 import com.psycodeinteractive.fbimostwanted.domain.execution.UseCaseExecutor
 import com.psycodeinteractive.fbimostwanted.domain.execution.usecase.BaseUseCase
+import com.psycodeinteractive.fbimostwanted.domain.logger.Logger
 import com.psycodeinteractive.fbimostwanted.presentation.execution.UseCaseExecutorProvider
 import com.psycodeinteractive.fbimostwanted.presentation.mapper.DefaultDomainToPresentationExceptionMapper
 import com.psycodeinteractive.fbimostwanted.presentation.model.exception.PresentationException
 import com.psycodeinteractive.fbimostwanted.presentation.navigation.PresentationDestination
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
+import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Inject
 
 @Inject
 abstract class BaseViewModel<BaseState : ViewState, BaseEvent : Event>(
     useCaseExecutorProvider: UseCaseExecutorProvider,
-    private val defaultDomainToPresentationExceptionMapper: DefaultDomainToPresentationExceptionMapper
+    private val defaultDomainToPresentationExceptionMapper: DefaultDomainToPresentationExceptionMapper,
+    private val logger: Logger
 ) : SharedViewModel() {
 
     private val useCaseExecutor: UseCaseExecutor = useCaseExecutorProvider(viewModelScope)
@@ -40,15 +42,17 @@ abstract class BaseViewModel<BaseState : ViewState, BaseEvent : Event>(
     }
 
     protected fun BaseEvent.dispatchEvent() {
-        viewModelScope.launch {
-            _eventChannel.send(this@dispatchEvent)
-        }
+        _eventChannel.trySend(this@dispatchEvent)
+            .onFailure { exception ->
+                exception?.let(logger::e)
+            }
     }
 
     protected fun PresentationDestination.navigate() {
-        viewModelScope.launch {
-            _navigationCommands.send(this@navigate)
-        }
+        _navigationCommands.trySend(this@navigate)
+            .onFailure { exception ->
+                exception?.let(logger::e)
+            }
     }
 
     protected fun <Output> BaseUseCase<Unit, Output>.execute(
